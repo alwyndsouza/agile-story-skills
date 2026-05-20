@@ -5,10 +5,12 @@ on:
     branches: [main]
     paths:
       - '.github/skills/**'
+      - '.github/workflows/validate-skill.yml'
   pull_request:
     branches: [main]
     paths:
       - '.github/skills/**'
+      - '.github/workflows/validate-skill.yml'
 
 permissions:
   contents: read
