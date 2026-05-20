@@ -10,6 +10,9 @@ on:
     paths:
       - '.github/skills/**'
 
+permissions:
+  contents: read
+
 jobs:
   validate-structure:
     runs-on: ubuntu-latest
