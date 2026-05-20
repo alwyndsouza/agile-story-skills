@@ -1,5 +1,10 @@
 # Jira Story Writer skill ownership
-.github/skills/jira-story-writer/   @<your-org>/<your-team>
-.github/workflows/                   @<your-org>/<your-team>
-docs/                                @<your-org>/<your-team>
-CHANGELOG.md                         @<your-org>/<your-team>
+#
+# Replace @alwyndsouza with your GitHub team handle (e.g. @your-org/your-team)
+# when migrating this repo to an organisation. Codeowner approval is required
+# for any change to the paths below.
+
+.github/skills/jira-story-writer/   @alwyndsouza
+.github/workflows/                  @alwyndsouza
+docs/                               @alwyndsouza
+CHANGELOG.md                        @alwyndsouza
