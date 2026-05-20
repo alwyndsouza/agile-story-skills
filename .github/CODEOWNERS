@@ -1,0 +1,5 @@
+# Jira Story Writer skill ownership
+.github/skills/jira-story-writer/   @<your-org>/<your-team>
+.github/workflows/                   @<your-org>/<your-team>
+docs/                                @<your-org>/<your-team>
+CHANGELOG.md                         @<your-org>/<your-team>

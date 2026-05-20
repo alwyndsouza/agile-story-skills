@@ -1,0 +1,77 @@
+╔══════════════════════════════════════════════════════════════╗
+║  JIRA STORY                                                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+TITLE:
+TYPE:
+PRIORITY:
+POINTS:
+LABELS:
+EPIC:
+
+──────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────
+
+### Context & Background
+
+### User Story
+As a
+I want to
+So that
+
+### Scope — IN ✅
+-
+
+### Scope — OUT ❌ (explicitly excluded)
+-
+
+──────────────────────────────────────────────────────────────
+ACCEPTANCE CRITERIA
+──────────────────────────────────────────────────────────────
+
+**AC1:** GIVEN WHEN THEN
+**AC2:** GIVEN WHEN THEN
+**AC3:** GIVEN WHEN THEN
+
+──────────────────────────────────────────────────────────────
+TECHNICAL NOTES
+──────────────────────────────────────────────────────────────
+
+### Approach
+-
+
+### Dependencies
+| Type       | Reference               |
+|------------|-------------------------|
+| Blocked by |                         |
+| Blocks     |                         |
+| Input from |                         |
+
+### Non-Functional Requirements
+| Dimension     | Requirement |
+|---------------|-------------|
+| Performance   |             |
+| Security      |             |
+| Observability |             |
+
+──────────────────────────────────────────────────────────────
+DEFINITION OF READY ✅
+──────────────────────────────────────────────────────────────
+- [ ] Title starts with an action verb and is specific
+- [ ] User story names a real persona with a measurable outcome
+- [ ] ACs are testable (GIVEN/WHEN/THEN), minimum 3
+- [ ] Scope IN and OUT are explicitly defined
+- [ ] Dependencies are identified
+- [ ] Story is estimated (points + rationale)
+
+──────────────────────────────────────────────────────────────
+DEFINITION OF DONE ✅
+──────────────────────────────────────────────────────────────
+- [ ] Code reviewed and approved (minimum 1 approver)
+- [ ] Unit tests written and passing (coverage ≥ 80%)
+- [ ] Integration tests passing in CI/CD pipeline
+- [ ] Documentation updated (README / Confluence / runbook)
+- [ ] Deployed to DEV or UAT and smoke tested
+- [ ] All ACs signed off by PO or requester
+- [ ] No unresolved critical or high severity lint/security issues
