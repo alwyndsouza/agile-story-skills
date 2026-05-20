@@ -1,0 +1,88 @@
+name: Validate Skill
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/skills/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/skills/**'
+
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required skill files exist
+        run: |
+          set -euo pipefail
+          required_files=(
+            ".github/skills/jira-story-writer/SKILL.md"
+            ".github/skills/jira-story-writer/examples/good-story.md"
+            ".github/skills/jira-story-writer/examples/bad-story.md"
+            ".github/skills/jira-story-writer/references/personas.md"
+            ".github/skills/jira-story-writer/references/story-format-guide.md"
+            ".github/skills/jira-story-writer/assets/story-template.txt"
+          )
+
+          missing=0
+          for file in "${required_files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "❌ Missing required file: $file"
+              missing=1
+            fi
+          done
+
+          if [[ "$missing" -ne 0 ]]; then
+            echo "Validation failed: one or more required files are missing."
+            exit 1
+          fi
+
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint markdown under .github/skills/
+        uses: DavidAnson/markdownlint-cli2-action@v18
+        with:
+          globs: '.github/skills/**/*.md'
+
+  validate-frontmatter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate SKILL.md frontmatter fields
+        run: |
+          set -euo pipefail
+          skill_file=".github/skills/jira-story-writer/SKILL.md"
+
+          if [[ ! -f "$skill_file" ]]; then
+            echo "❌ SKILL.md not found at $skill_file"
+            exit 1
+          fi
+
+          required_fields=("name:" "description:" "license:" "metadata:")
+          for field in "${required_fields[@]}"; do
+            if ! grep -q "^${field}" "$skill_file"; then
+              echo "❌ Missing required frontmatter field in SKILL.md: ${field%:}"
+              exit 1
+            fi
+          done
+
+  success:
+    runs-on: ubuntu-latest
+    needs:
+      - validate-structure
+      - lint-markdown
+      - validate-frontmatter
+    steps:
+      - name: Validation success message
+        run: echo "✅ Skill validation passed"
