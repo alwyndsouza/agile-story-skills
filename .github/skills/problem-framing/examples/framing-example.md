@@ -14,10 +14,10 @@ The team is tempted to immediately resize the cluster. Instead they invoke
 
 ## Phase 1 — Look Inward
 
-### Q1. What is the problem? Describe symptoms, not solutions.
+### Q1. What is the problem? Describe symptoms, not solutions
 
 > **Facilitator:** Hold off on the cluster. What are we observing going wrong?
-
+>
 > **Team:** The daily revenue close report is landing in finance's inbox at 09:40
 > instead of the committed 07:00. Finance has to either delay their morning standup or
 > work from stale numbers. This has happened on 14 of the last 20 business days.
@@ -95,7 +95,7 @@ stage. Month-end auditors are an overlooked beneficiary.* ✅
 > affects **the AMER finance team and month-end auditors** and has been overlooked
 > because **the platform team defaults to "scale up the cluster" instead of looking
 > upstream**.
-
+>
 > **Team:** Approved.
 
 ### Q8. How Might We statement
@@ -104,7 +104,7 @@ stage. Month-end auditors are an overlooked beneficiary.* ✅
 > How might we **shift the bottleneck upstream of the revenue pipeline** as we aim to
 > **deliver the daily close report to finance by 07:00 on at least 19 of every 20
 > business days**?
-
+>
 > **Team:** Approved.
 
 ---

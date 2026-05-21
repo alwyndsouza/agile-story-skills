@@ -16,11 +16,11 @@ its own and produce value, it is not a valid story.
 **Ask:** "What ordered steps does the persona move through to reach the outcome? Can each
 step ship as its own thin slice?"
 
-**Before — 13 points**
+### Before — 13 points
 - "Build customer onboarding flow" covering: identity check → KYC questionnaire → bank
   account verification → first deposit → welcome email.
 
-**After — three slices**
+### After — three slices
 1. Capture identity and KYC answers (persist + show success) — 5 pts
 2. Verify linked bank account through provider callback — 5 pts
 3. Trigger welcome email on first qualifying deposit event — 3 pts
@@ -37,11 +37,11 @@ slice must change end-to-end behaviour for the persona.
 **Ask:** "Which rule covers the largest, simplest population? Can each rule variant ship
 independently and add value on its own?"
 
-**Before — 13 points**
+### Before — 13 points
 - "Calculate sales commission" covering: standard tier, accelerator on quota over-attainment,
   team override for leads, clawback on returned orders.
 
-**After — three slices**
+### After — three slices
 1. Calculate standard tier commission for individual sellers — 5 pts
 2. Add accelerator multiplier when quota attainment > 100% — 3 pts
 3. Apply clawback when an order is returned within 90 days — 5 pts
@@ -58,11 +58,11 @@ unlock the same outcome, they are tasks. Find a different value driver per rule.
 **Ask:** "Which data variant covers the 80% case? Which can be deferred without blocking
 the dominant value?"
 
-**Before — 13 points**
+### Before — 13 points
 - "Ingest partner sales feeds" covering CSV, JSON, XML, and EDI 850 formats from 12
   partners.
 
-**After — three slices**
+### After — three slices
 1. Ingest CSV sales feeds from the top-five partners (covers 78% of volume) — 5 pts
 2. Add JSON feed parser for the four mid-tier partners — 5 pts
 3. Add EDI 850 parser for the three legacy retail partners — 8 pts
@@ -83,7 +83,8 @@ prior AC is shipped?"
 **Before — 13 points** — a single story with 9 ACs covering search, filter, sort,
 pagination, saved searches, shareable URLs, export, email digest, and audit log.
 
-**After — three slices**
+### After — three slices
+
 1. Search and filter results (ACs 1–3) — 5 pts
 2. Sort, paginate, and shareable URL (ACs 4–6) — 5 pts
 3. Saved searches, export to CSV, and audit log (ACs 7–9) — 5 pts
@@ -100,10 +101,10 @@ shippable without the other six, they should be three separate stories.
 **Ask:** "Is there a thin end-to-end layer we can ship first, then enrich? Bronze →
 Silver → Gold is the classic data-platform shape."
 
-**Before — 13 points**
+### Before — 13 points
 - "Build customer 360 mart on Databricks" delivering 24 attributes across 6 source systems.
 
-**After — three slices**
+### After — three slices
 1. Bronze ingestion of all 6 source systems with raw delta tables — 5 pts
 2. Silver-layer joins producing 8 high-priority attributes for finance — 5 pts
 3. Gold-layer mart with full 24 attributes published to BI — 8 pts
@@ -120,11 +121,11 @@ that is horizontal slicing. Each slice must change behaviour for a real consumer
 **Ask:** "What can we deliver against a stub or sandbox while the real dependency is being
 provisioned, and what truly requires the real integration?"
 
-**Before — 13 points**
+### Before — 13 points
 - "Integrate payment processor for refunds" requires vendor sandbox keys (in legal review),
   callback signature library, and reconciliation report.
 
-**After — three slices**
+### After — three slices
 1. Implement refund flow against vendor sandbox stub with contract tests — 5 pts
 2. Replace stub with real vendor sandbox once keys are provisioned — 3 pts
 3. Add reconciliation report comparing vendor settlement file to internal ledger — 5 pts
@@ -142,11 +143,11 @@ boundaries.
 **Ask:** "Which environment, region, or platform unlocks the most value first? Can the
 control plane and the data plane ship separately?"
 
-**Before — 13 points**
+### Before — 13 points
 - "Roll out new feature flag service to all environments and regions" covering DEV, UAT,
   PROD across EU and US.
 
-**After — three slices**
+### After — three slices
 1. Deploy feature flag service to DEV in EU with SDK smoke tests — 5 pts
 2. Promote to UAT in EU with SLO instrumentation — 3 pts
 3. Promote to PROD in EU and US with rollout playbook — 5 pts
@@ -164,11 +165,11 @@ can actually use.
 **Ask:** "What is the single most expensive unknown right now? What experiment, prototype,
 or measurement would unblock estimation?"
 
-**Before — 13 points**
+### Before — 13 points
 - "Migrate ML feature store from in-house cache to vendor feature platform" with unknown
   latency under production load.
 
-**After — two slices**
+### After — two slices
 1. Spike: benchmark vendor feature platform p95 read latency under shadow traffic — 3 pts
 2. Migrate top-five online models to vendor feature platform with rollback plan — 8 pts
 
