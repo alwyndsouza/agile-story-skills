@@ -42,6 +42,68 @@ Keep the source material in mind when modifying skill behaviour.
 | [`problem-framing`](.github/skills/problem-framing) | MITRE Problem Framing Canvas — three phases (Look Inward / Look Outward / Reframe), eight questions, "How Might We" reframing |
 | [`sprint-goal-writer`](.github/skills/sprint-goal-writer) | Scrum Guide (Schwaber & Sutherland) — sprint goal as a single outcome-based objective providing the team focus and flexibility |
 
+The diagram below renders on github.com (GitHub supports Mermaid natively). In a plain
+markdown viewer it stays as a code block — the table above is the textual equivalent.
+
+```mermaid
+mindmap
+  root((Frameworks behind<br/>the four skills))
+    agile-story-writer
+      BDD style ACs
+        GIVEN WHEN THEN
+        Dan North
+      INVEST heuristic
+        Bill Wake
+      Fibonacci estimation
+        1 2 3 5 8 13
+      Scrum
+        Definition of Ready
+        Definition of Done
+    agile-story-splitter
+      Humanizing Work
+        Richard Lawrence
+        Peter Green
+      Eight split patterns
+        P1 Workflow steps
+        P2 Business rule variations
+        P3 Data variations
+        P4 AC complexity
+        P5 Major effort
+        P6 External dependencies
+        P7 DevOps steps
+        P8 Tiny Acts of Discovery
+      INVEST validation
+        Independent
+        Negotiable
+        Valuable
+        Estimable
+        Small
+        Testable
+    problem-framing
+      MITRE Problem Framing Canvas
+      Three phases
+        Look Inward
+        Look Outward
+        Reframe
+      Eight questions
+        Q1 to Q3 inward
+        Q4 to Q6 outward
+        Q7 problem statement
+        Q8 How Might We
+      Outputs
+        Refined problem statement
+        HMW question
+    sprint-goal-writer
+      Scrum Guide
+        Schwaber and Sutherland
+      Sprint goal definition
+        Single sentence
+        Outcome based
+        Names beneficiary
+        Measurable or directional
+      Five-item health check
+```
+
 ## Quick Start
 
 First, get the skills onto your machine. Pick whichever fetch method suits you, then
