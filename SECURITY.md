@@ -4,9 +4,10 @@
 
 | Version | Supported |
 |---|---|
-| 1.0.0 | ✅ |
+| 1.1.x | ✅ |
+| 1.0.x | ❌ (superseded — paths referenced the old `jira-story-writer` skill name) |
 
-## What this skill does NOT do
+## What these skills do NOT do
 - No external API calls
 - No credential handling or secret storage
 - No data exfiltration behavior
