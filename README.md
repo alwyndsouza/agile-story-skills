@@ -32,7 +32,29 @@ and Azure DevOps.
 
 ## Quick Start
 
+First, get the skills onto your machine. Pick whichever fetch method suits you, then
+follow with either the project-scoped or personal install step.
+
+### Fetch the skills
+
+**Option A — clone the repo (tracks `main`):**
+
+```bash
+git clone https://github.com/alwyndsouza/agile-story-skills.git
+cd agile-story-skills
+```
+
+**Option B — download a pinned release tarball (recommended for shared installs):**
+
+```bash
+gh release download v1.1.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
+tar -xzf agile-story-skills-1.1.0.tar.gz
+cd agile-story-skills-1.1.0
+```
+
 ### 1) Project-scoped install
+
+Copy the four skill directories into the target repo's `.github/skills/`.
 
 ```bash
 mkdir -p <target-repo>/.github/skills
@@ -44,6 +66,8 @@ cp -R .github/skills/sprint-goal-writer    <target-repo>/.github/skills/
 
 ### 2) Personal install
 
+Copy the four skill directories into your user-level Copilot skills folder.
+
 ```bash
 mkdir -p ~/.copilot/skills
 cp -R .github/skills/agile-story-writer    ~/.copilot/skills/
@@ -52,11 +76,19 @@ cp -R .github/skills/problem-framing       ~/.copilot/skills/
 cp -R .github/skills/sprint-goal-writer    ~/.copilot/skills/
 ```
 
-### 3) GitHub CLI install
+### 3) Git submodule (for teams who want updates to flow with `git pull`)
+
+From the target repo's root:
 
 ```bash
-gh skills install alwyndsouza/agile-story-skills
+git submodule add https://github.com/alwyndsouza/agile-story-skills.git .github/skills/_upstream
+# Symlink each skill into place (or use cp -R for a flat copy)
+for skill in agile-story-writer agile-story-splitter problem-framing sprint-goal-writer; do
+  ln -s _upstream/.github/skills/$skill .github/skills/$skill
+done
 ```
+
+To upgrade later: `git submodule update --remote .github/skills/_upstream`.
 
 ## How to Use
 
