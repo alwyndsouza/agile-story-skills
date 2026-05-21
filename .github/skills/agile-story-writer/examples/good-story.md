@@ -1,5 +1,5 @@
 ╔══════════════════════════════════════════════════════════════╗
-║  JIRA STORY                                                  ║
+║  AGILE STORY                                                 ║
 ╚══════════════════════════════════════════════════════════════╝
 
 TITLE:      Migrate daily revenue aggregation pipeline to Databricks DLT for reliable DEV deployment
