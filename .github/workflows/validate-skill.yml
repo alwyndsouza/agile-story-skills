@@ -26,12 +26,21 @@ jobs:
         run: |
           set -euo pipefail
           required_files=(
-            ".github/skills/jira-story-writer/SKILL.md"
-            ".github/skills/jira-story-writer/examples/good-story.md"
-            ".github/skills/jira-story-writer/examples/bad-story.md"
-            ".github/skills/jira-story-writer/references/personas.md"
-            ".github/skills/jira-story-writer/references/story-format-guide.md"
-            ".github/skills/jira-story-writer/assets/story-template.txt"
+            ".github/skills/agile-story-writer/SKILL.md"
+            ".github/skills/agile-story-writer/examples/good-story.md"
+            ".github/skills/agile-story-writer/examples/bad-story.md"
+            ".github/skills/agile-story-writer/references/personas.md"
+            ".github/skills/agile-story-writer/references/story-format-guide.md"
+            ".github/skills/agile-story-writer/assets/story-template.txt"
+            ".github/skills/agile-story-splitter/SKILL.md"
+            ".github/skills/agile-story-splitter/examples/split-example.md"
+            ".github/skills/agile-story-splitter/references/split-patterns.md"
+            ".github/skills/problem-framing/SKILL.md"
+            ".github/skills/problem-framing/examples/framing-example.md"
+            ".github/skills/problem-framing/assets/canvas-template.md"
+            ".github/skills/sprint-goal-writer/SKILL.md"
+            ".github/skills/sprint-goal-writer/examples/goal-example.md"
+            ".github/skills/sprint-goal-writer/assets/goal-template.md"
           )
 
           missing=0
@@ -67,20 +76,33 @@ jobs:
       - name: Validate SKILL.md frontmatter fields
         run: |
           set -euo pipefail
-          skill_file=".github/skills/jira-story-writer/SKILL.md"
-
-          if [[ ! -f "$skill_file" ]]; then
-            echo "❌ SKILL.md not found at $skill_file"
-            exit 1
-          fi
+          skill_files=(
+            ".github/skills/agile-story-writer/SKILL.md"
+            ".github/skills/agile-story-splitter/SKILL.md"
+            ".github/skills/problem-framing/SKILL.md"
+            ".github/skills/sprint-goal-writer/SKILL.md"
+          )
 
           required_fields=("name:" "description:" "license:" "metadata:")
-          for field in "${required_fields[@]}"; do
-            if ! grep -q "^${field}" "$skill_file"; then
-              echo "❌ Missing required frontmatter field in SKILL.md: ${field%:}"
-              exit 1
+          failed=0
+          for skill_file in "${skill_files[@]}"; do
+            if [[ ! -f "$skill_file" ]]; then
+              echo "❌ SKILL.md not found at $skill_file"
+              failed=1
+              continue
             fi
+            for field in "${required_fields[@]}"; do
+              if ! grep -q "^${field}" "$skill_file"; then
+                echo "❌ ${skill_file}: missing required frontmatter field: ${field%:}"
+                failed=1
+              fi
+            done
           done
+
+          if [[ "$failed" -ne 0 ]]; then
+            echo "Validation failed: one or more SKILL.md files have missing frontmatter."
+            exit 1
+          fi
 
   success:
     runs-on: ubuntu-latest
