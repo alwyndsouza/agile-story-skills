@@ -1,4 +1,4 @@
-# Approved Personas for Jira Stories
+# Approved Personas for Agile Stories
 
 > Never write "as a user" — always use a specific role from this list.
 

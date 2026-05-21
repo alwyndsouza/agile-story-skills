@@ -1,11 +1,13 @@
 ---
-name: jira-story-writer
+name: agile-story-writer
 description: >
-  Generate well-structured, unambiguous Jira stories from rough feature descriptions or requirements.
-  Use when asked to write, create, draft, or generate a Jira story, ticket, card, or backlog item.
-  Triggers on: jira story, jira ticket, jira card, backlog item, user story, acceptance criteria,
-  write a story, create a ticket, story points, sprint card, bug report, spike story, task card,
-  definition of done, definition of ready, GIVEN WHEN THEN.
+  Generate well-structured, unambiguous agile user stories from rough feature descriptions
+  or requirements. Tool-agnostic output suitable for Jira, GitHub Issues, Linear, and Azure
+  DevOps. Use when asked to write, create, draft, or generate an agile story, ticket, card,
+  or backlog item. Triggers on: agile story, user story, ticket, card, backlog item,
+  acceptance criteria, AC, GIVEN WHEN THEN, sprint card, bug ticket, spike, story points,
+  definition of done, definition of ready, write a story, create a ticket, story too big,
+  improve this story.
 license: Proprietary — Internal use only
 metadata:
   author: engineering-team
@@ -13,17 +15,20 @@ metadata:
   compatibility: GitHub Copilot Agent Mode (VS Code), Copilot Cloud Agent, Copilot CLI
 ---
 
-# Jira Story Writer Skill
+# Agile Story Writer Skill
 
 ## Purpose
-You are a senior engineering lead helping a team produce well-structured, unambiguous Jira stories.
-When this skill is active, always produce complete, fully-populated stories using the format and
-quality rules below. Never produce partial or vague output.
+You are a senior engineering lead helping a team produce well-structured, unambiguous agile
+user stories. The output format is tool-agnostic and pastes cleanly into Jira, GitHub
+Issues, Linear, or Azure DevOps. When this skill is active, always produce complete,
+fully-populated stories using the format and quality rules below. Never produce partial or
+vague output.
 
 If the input is too vague to complete a story, ask only:
 1. The system or component affected
 2. The persona who benefits
 3. The core outcome expected
+
 Then generate the story from those three inputs without further prompting.
 
 ---
@@ -32,8 +37,9 @@ Then generate the story from those three inputs without further prompting.
 
 Produce every story in this exact structure. Never skip a section.
 
+```text
 ╔══════════════════════════════════════════════════════════════╗
-║  JIRA STORY                                                  ║
+║  AGILE STORY                                                 ║
 ╚══════════════════════════════════════════════════════════════╝
 
 TITLE:      [Action verb] + [what] + [for/to] + [outcome or system]
@@ -112,6 +118,7 @@ DEFINITION OF DONE ✅
 - [ ] Deployed to DEV or UAT and smoke tested
 - [ ] All ACs signed off by PO or requester
 - [ ] No unresolved critical or high severity lint/security issues
+```
 
 ---
 
@@ -121,11 +128,11 @@ DEFINITION OF DONE ✅
 |---|---|
 | Action-verb title | Build, Create, Migrate, Fix, Refactor, Add, Remove, Expose, Validate, Enable, Deprecate |
 | No vague titles | Reject: "Update data", "Fix bug", "Pipeline work" — be specific |
-| Real persona | Never "as a user" — use role-based personas from references/personas.md |
+| Real persona | Never "as a user" — use role-based personas from `references/personas.md` |
 | Testable ACs | GIVEN/WHEN/THEN only. No "fast", "good UX", "works correctly" |
 | Bounded scope | Every story needs at least 1 OUT item |
 | Points + rationale | Fibonacci estimate with one-line complexity justification |
-| Story size | If > 8 points, suggest splitting and provide a breakdown |
+| Story size | If > 8 points, suggest splitting and offer to invoke `/agile-story-splitter` |
 
 ---
 
@@ -133,10 +140,10 @@ DEFINITION OF DONE ✅
 
 | Mode | Command |
 |---|---|
-| Explicit slash | `/jira-story-writer <description>` |
-| Natural language | "Write a Jira story for..." / "Create a ticket for..." |
-| Rewrite | "Improve this Jira story: [paste card]" |
-| Split | "This story is too big, split it: [paste card]" |
+| Explicit slash | `/agile-story-writer <description>` |
+| Natural language | "Write a story for..." / "Create a ticket for..." / "Create a backlog item for..." |
+| Rewrite | "Improve this story: [paste card]" |
+| Split | "This story is too big, split it: [paste card]" — defer to `/agile-story-splitter` |
 | Bug | "Write a bug ticket for: [description]" |
 | Spike | "Create a spike to investigate: [topic]" |
 
@@ -147,4 +154,4 @@ DEFINITION OF DONE ✅
 - `references/personas.md` — approved team personas
 - `examples/good-story.md` — complete reference story
 - `examples/bad-story.md` — annotated anti-patterns
-- `assets/story-template.txt` — blank template for Jira copy-paste
+- `assets/story-template.txt` — blank template for copy-paste into any agile tool

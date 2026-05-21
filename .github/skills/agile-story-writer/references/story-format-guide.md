@@ -1,4 +1,4 @@
-# Jira Story Format Guide
+# Agile Story Format Guide
 
 ## TITLE
 

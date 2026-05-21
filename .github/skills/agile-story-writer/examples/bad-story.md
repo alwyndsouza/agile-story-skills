@@ -1,4 +1,4 @@
-# Jira Story Anti-Patterns Reference
+# Agile Story Anti-Patterns Reference
 
 ## 1) Vague title
 ❌ **Bad:** `Update pipeline`

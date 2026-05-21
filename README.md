@@ -1,55 +1,121 @@
-# Jira Story Writer
+# Agile Story Skills
 
-Generate well-structured, unambiguous Jira stories from rough requirements using a GitHub Copilot Agent Skill.
+A bundle of four GitHub Copilot Agent Skills that take an engineering or product team from
+a vague request through framing, story authoring, story splitting, and sprint goal
+setting. Output is tool-agnostic — it pastes cleanly into Jira, GitHub Issues, Linear,
+and Azure DevOps.
 
 ![CI](https://github.com/alwyndsouza/jira-story-writer/actions/workflows/validate-skill.yml/badge.svg)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![License](https://img.shields.io/badge/license-Proprietary-lightgrey)
 ![Copilot Plan](https://img.shields.io/badge/Copilot-Business%20%7C%20Enterprise-purple)
 
 ## Why This Exists
 
-- Teams lose time rewriting vague stories that are missing scope boundaries and testable acceptance criteria.
-- Inconsistent personas and ambiguous definitions create estimation drift and rework during sprints.
-- Standardized story structure improves clarity, engineering handoff quality, and delivery predictability.
+- Teams lose time rewriting vague stories that are missing scope boundaries and testable
+  acceptance criteria.
+- Stories arrive too large to estimate, and splitting them by gut feel produces
+  horizontal slices that never ship value alone.
+- Sprints begin without an outcome-based goal, so the team has no daily trade-off lever
+  when a story drifts.
+- Worst of all, work starts before the problem is framed — and the cheapest defect to
+  prevent is the wrong problem.
+
+## The Four Skills
+
+| # | Skill | Use it when |
+|---|-------|-------------|
+| 1 | [`agile-story-writer`](.github/skills/agile-story-writer) | You need a complete, unambiguous story with GIVEN/WHEN/THEN ACs, scope IN/OUT, NFRs, and DoR/DoD. |
+| 2 | [`agile-story-splitter`](.github/skills/agile-story-splitter) | A story is > 8 points, can't be estimated, or an epic needs decomposing into 2–5 sprint-sized vertical slices. |
+| 3 | [`problem-framing`](.github/skills/problem-framing) | A request is vague, teams disagree on the real problem, or discovery is needed before backlog grooming. |
+| 4 | [`sprint-goal-writer`](.github/skills/sprint-goal-writer) | Sprint planning needs a single outcome-based objective drawn from 3–10 committed stories. |
 
 ## Quick Start
 
+First, get the skills onto your machine. Pick whichever fetch method suits you, then
+follow with either the project-scoped or personal install step.
+
+### Fetch the skills
+
+**Option A — clone the repo (tracks `main`):**
+
+```bash
+git clone https://github.com/alwyndsouza/agile-story-skills.git
+cd agile-story-skills
+```
+
+**Option B — download a pinned release tarball (recommended for shared installs):**
+
+```bash
+gh release download v1.1.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
+tar -xzf agile-story-skills-1.1.0.tar.gz
+cd agile-story-skills-1.1.0
+```
+
 ### 1) Project-scoped install
+
+Copy the four skill directories into the target repo's `.github/skills/`.
 
 ```bash
 mkdir -p <target-repo>/.github/skills
-cp -R .github/skills/jira-story-writer <target-repo>/.github/skills/
+cp -R .github/skills/agile-story-writer    <target-repo>/.github/skills/
+cp -R .github/skills/agile-story-splitter  <target-repo>/.github/skills/
+cp -R .github/skills/problem-framing       <target-repo>/.github/skills/
+cp -R .github/skills/sprint-goal-writer    <target-repo>/.github/skills/
 ```
 
 ### 2) Personal install
 
+Copy the four skill directories into your user-level Copilot skills folder.
+
 ```bash
 mkdir -p ~/.copilot/skills
-cp -R .github/skills/jira-story-writer ~/.copilot/skills/
+cp -R .github/skills/agile-story-writer    ~/.copilot/skills/
+cp -R .github/skills/agile-story-splitter  ~/.copilot/skills/
+cp -R .github/skills/problem-framing       ~/.copilot/skills/
+cp -R .github/skills/sprint-goal-writer    ~/.copilot/skills/
 ```
 
-### 3) GitHub CLI install
+### 3) Git submodule (for teams who want updates to flow with `git pull`)
+
+From the target repo's root:
 
 ```bash
-gh skills install alwyndsouza/jira-story-writer
+git submodule add https://github.com/alwyndsouza/agile-story-skills.git .github/skills/_upstream
+# Symlink each skill into place (or use cp -R for a flat copy)
+for skill in agile-story-writer agile-story-splitter problem-framing sprint-goal-writer; do
+  ln -s _upstream/.github/skills/$skill .github/skills/$skill
+done
 ```
+
+To upgrade later: `git submodule update --remote .github/skills/_upstream`.
 
 ## How to Use
 
-| Mode | Command / Prompt |
-|---|---|
-| Explicit slash | `/jira-story-writer Migrate ETL job to DLT with quality checks` |
-| Natural language | `Write a Jira story for adding alerting on failed ingestion jobs.` |
-| Rewrite | `Improve this Jira story: [paste current ticket text]` |
-| Split | `This story is too big, split it: [paste card]` |
-| Bug | `Write a bug ticket for duplicate invoice records in daily load.` |
-| Spike | `Create a spike to investigate row-level lineage in Databricks.` |
+| Skill | Mode | Command / Prompt |
+|---|---|---|
+| `agile-story-writer` | Explicit slash | `/agile-story-writer Migrate ETL job to DLT with quality checks` |
+| `agile-story-writer` | Natural language | `Write a story for adding alerting on failed ingestion jobs.` |
+| `agile-story-writer` | Rewrite | `Improve this story: [paste current ticket text]` |
+| `agile-story-writer` | Bug | `Write a bug ticket for duplicate invoice records in daily load.` |
+| `agile-story-writer` | Spike | `Create a spike to investigate row-level lineage in Databricks.` |
+| `agile-story-splitter` | Explicit slash | `/agile-story-splitter [paste oversized story]` |
+| `agile-story-splitter` | Natural language | `This story is too big, split it: [paste card]` |
+| `agile-story-splitter` | Pattern-pinned | `Split this using workflow steps: [paste card]` |
+| `problem-framing` | Explicit slash | `/problem-framing` (then answer Q1 onward) |
+| `problem-framing` | Context dump | `Here's what we know: [dump]. Frame it.` |
+| `problem-framing` | Non-interactive | `Just frame this for me: [description]` |
+| `sprint-goal-writer` | Explicit slash | `/sprint-goal-writer [paste story list]` |
+| `sprint-goal-writer` | Natural language | `Write a sprint goal for these stories: [paste]` |
+| `sprint-goal-writer` | Revision | `Improve this sprint goal: [paste current goal]` |
 
-### Example prompts
-1. `Write a Jira story for migrating customer churn scoring to a daily Databricks job with quality checks.`
-2. `Create a ticket to add API contract validation before publishing order events.`
-3. `Improve this Jira story so all ACs use GIVEN/WHEN/THEN: [paste draft]`
+### Typical end-to-end flow
+
+1. `/problem-framing` — turn a vague request into a refined problem statement and a
+   How-Might-We question.
+2. `/agile-story-writer` — generate the first story from the HMW.
+3. `/agile-story-splitter` — invoked automatically when the writer flags > 8 points.
+4. `/sprint-goal-writer` — once the sprint is committed, draft the outcome-based goal.
 
 ## What Every Story Contains
 
@@ -65,9 +131,26 @@ gh skills install alwyndsouza/jira-story-writer
 ## Repo Structure
 
 ```text
-jira-story-writer/
+agile-story-skills/
 ├── .github/
-│   ├── skills/jira-story-writer/      # Skill definition, examples, references, template
+│   ├── skills/
+│   │   ├── agile-story-writer/        # Story authoring (tool-agnostic format)
+│   │   │   ├── SKILL.md
+│   │   │   ├── examples/{good,bad}-story.md
+│   │   │   ├── references/{personas,story-format-guide}.md
+│   │   │   └── assets/story-template.txt
+│   │   ├── agile-story-splitter/      # Humanizing Work 8-pattern splitter
+│   │   │   ├── SKILL.md
+│   │   │   ├── examples/split-example.md
+│   │   │   └── references/split-patterns.md
+│   │   ├── problem-framing/           # MITRE Problem Framing Canvas (3 phases / 8 Qs)
+│   │   │   ├── SKILL.md
+│   │   │   ├── examples/framing-example.md
+│   │   │   └── assets/canvas-template.md
+│   │   └── sprint-goal-writer/        # Outcome-based sprint goal drafter
+│   │       ├── SKILL.md
+│   │       ├── examples/goal-example.md
+│   │       └── assets/goal-template.md
 │   ├── workflows/validate-skill.yml   # CI validation for structure, markdown, frontmatter
 │   ├── ISSUE_TEMPLATE/                # Skill improvement issue template
 │   ├── CODEOWNERS                     # Ownership and review enforcement
@@ -95,5 +178,5 @@ See [CHANGELOG.md](CHANGELOG.md).
 ## Roadmap
 
 - Org-level skills support (coming)
-- Custom agent wrapping this skill (planned)
-- Jira API push via MCP (future)
+- Custom agent wrapping the four skills (planned)
+- Jira / Linear / GitHub Issues push via MCP (future)
