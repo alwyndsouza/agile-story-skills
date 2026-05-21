@@ -5,7 +5,7 @@ a vague request through framing, story authoring, story splitting, and sprint go
 setting. Output is tool-agnostic — it pastes cleanly into Jira, GitHub Issues, Linear,
 and Azure DevOps.
 
-![CI](https://github.com/alwyndsouza/jira-story-writer/actions/workflows/validate-skill.yml/badge.svg)
+![CI](https://github.com/alwyndsouza/agile-story-skills/actions/workflows/validate-skill.yml/badge.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![License](https://img.shields.io/badge/license-Proprietary-lightgrey)
 ![Copilot Plan](https://img.shields.io/badge/Copilot-Business%20%7C%20Enterprise-purple)
@@ -29,6 +29,18 @@ and Azure DevOps.
 | 2 | [`agile-story-splitter`](.github/skills/agile-story-splitter) | A story is > 8 points, can't be estimated, or an epic needs decomposing into 2–5 sprint-sized vertical slices. |
 | 3 | [`problem-framing`](.github/skills/problem-framing) | A request is vague, teams disagree on the real problem, or discovery is needed before backlog grooming. |
 | 4 | [`sprint-goal-writer`](.github/skills/sprint-goal-writer) | Sprint planning needs a single outcome-based objective drawn from 3–10 committed stories. |
+
+## Frameworks and Standards
+
+Each skill encodes established agile / discovery practice rather than ad-hoc rules.
+Keep the source material in mind when modifying skill behaviour.
+
+| Skill | Framework / Standards it encodes |
+|---|---|
+| [`agile-story-writer`](.github/skills/agile-story-writer) | BDD-style acceptance criteria (GIVEN/WHEN/THEN, Dan North) · INVEST quality heuristic (Bill Wake) · Fibonacci story-point estimation · Scrum Definition of Ready / Definition of Done |
+| [`agile-story-splitter`](.github/skills/agile-story-splitter) | Richard Lawrence & Peter Green — Humanizing Work eight story-split patterns (P1 Workflow Steps → P8 Tiny Acts of Discovery) · INVEST validation |
+| [`problem-framing`](.github/skills/problem-framing) | MITRE Problem Framing Canvas — three phases (Look Inward / Look Outward / Reframe), eight questions, "How Might We" reframing |
+| [`sprint-goal-writer`](.github/skills/sprint-goal-writer) | Scrum Guide (Schwaber & Sutherland) — sprint goal as a single outcome-based objective providing the team focus and flexibility |
 
 ## Quick Start
 
@@ -92,22 +104,54 @@ To upgrade later: `git submodule update --remote .github/skills/_upstream`.
 
 ## How to Use
 
-| Skill | Mode | Command / Prompt |
-|---|---|---|
-| `agile-story-writer` | Explicit slash | `/agile-story-writer Migrate ETL job to DLT with quality checks` |
-| `agile-story-writer` | Natural language | `Write a story for adding alerting on failed ingestion jobs.` |
-| `agile-story-writer` | Rewrite | `Improve this story: [paste current ticket text]` |
-| `agile-story-writer` | Bug | `Write a bug ticket for duplicate invoice records in daily load.` |
-| `agile-story-writer` | Spike | `Create a spike to investigate row-level lineage in Databricks.` |
-| `agile-story-splitter` | Explicit slash | `/agile-story-splitter [paste oversized story]` |
-| `agile-story-splitter` | Natural language | `This story is too big, split it: [paste card]` |
-| `agile-story-splitter` | Pattern-pinned | `Split this using workflow steps: [paste card]` |
-| `problem-framing` | Explicit slash | `/problem-framing` (then answer Q1 onward) |
-| `problem-framing` | Context dump | `Here's what we know: [dump]. Frame it.` |
-| `problem-framing` | Non-interactive | `Just frame this for me: [description]` |
-| `sprint-goal-writer` | Explicit slash | `/sprint-goal-writer [paste story list]` |
-| `sprint-goal-writer` | Natural language | `Write a sprint goal for these stories: [paste]` |
-| `sprint-goal-writer` | Revision | `Improve this sprint goal: [paste current goal]` |
+Each skill ships several invoke modes. Most are triggered by natural-language prompts
+that match the keywords in the skill's description — the explicit slash command is just
+the most direct path.
+
+### `agile-story-writer`
+
+Generate a complete story from a rough description, or rewrite an existing one.
+
+| Mode | Command / Prompt |
+|---|---|
+| Explicit slash | `/agile-story-writer Migrate ETL job to DLT with quality checks` |
+| Natural language | `Write a story for adding alerting on failed ingestion jobs.` |
+| Rewrite | `Improve this story: [paste current ticket text]` |
+| Bug | `Write a bug ticket for duplicate invoice records in daily load.` |
+| Spike | `Create a spike to investigate row-level lineage in Databricks.` |
+
+### `agile-story-splitter`
+
+Break an oversized story or epic into 2–5 sprint-sized vertical slices.
+
+| Mode | Command / Prompt |
+|---|---|
+| Explicit slash | `/agile-story-splitter [paste oversized story]` |
+| Natural language | `This story is too big, split it: [paste card]` |
+| Pattern-pinned | `Split this using workflow steps: [paste card]` (forces P1) |
+| Auto-flag from writer | When `/agile-story-writer` produces > 8 points, it offers to invoke this skill |
+
+### `problem-framing`
+
+Walk the team through the MITRE canvas before any story is written.
+
+| Mode | Command / Prompt |
+|---|---|
+| Explicit slash | `/problem-framing` (then answer Q1 onward, one question per turn) |
+| Natural language | `Frame the problem for: [description]` / `We need to do problem framing` |
+| Context dump | `Here's what we know: [dump]. Frame it.` |
+| Non-interactive | `Just frame this for me: [description]` |
+
+### `sprint-goal-writer`
+
+Draft an outcome-based sprint goal from a committed story list.
+
+| Mode | Command / Prompt |
+|---|---|
+| Explicit slash | `/sprint-goal-writer [paste story list]` |
+| Natural language | `Write a sprint goal for these stories: [paste]` |
+| Revision | `Improve this sprint goal: [paste current goal]` |
+| Health-check only | `Health-check this sprint goal: [paste]` (runs only the checklist) |
 
 ### Typical end-to-end flow
 
