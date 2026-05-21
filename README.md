@@ -5,7 +5,7 @@ a vague request through framing, story authoring, story splitting, and sprint go
 setting. Output is tool-agnostic — it pastes cleanly into Jira, GitHub Issues, Linear,
 and Azure DevOps.
 
-![CI](https://github.com/alwyndsouza/jira-story-writer/actions/workflows/validate-skill.yml/badge.svg)
+![CI](https://github.com/alwyndsouza/agile-story-skills/actions/workflows/validate-skill.yml/badge.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![License](https://img.shields.io/badge/license-Proprietary-lightgrey)
 ![Copilot Plan](https://img.shields.io/badge/Copilot-Business%20%7C%20Enterprise-purple)
