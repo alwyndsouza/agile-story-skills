@@ -42,9 +42,6 @@ Keep the source material in mind when modifying skill behaviour.
 | [`problem-framing`](.github/skills/problem-framing) | MITRE Problem Framing Canvas — three phases (Look Inward / Look Outward / Reframe), eight questions, "How Might We" reframing |
 | [`sprint-goal-writer`](.github/skills/sprint-goal-writer) | Scrum Guide (Schwaber & Sutherland) — sprint goal as a single outcome-based objective providing the team focus and flexibility |
 
-The diagram below renders on github.com (GitHub supports Mermaid natively). In a plain
-markdown viewer it stays as a code block — the table above is the textual equivalent.
-
 ```mermaid
 mindmap
   root((Frameworks behind<br/>the four skills))
