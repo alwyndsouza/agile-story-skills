@@ -22,11 +22,24 @@ This repository includes a framework for automated evaluation using GitHub Actio
 1. **Evaluation Script**: Located at `scripts/evaluate.py`, this script loads skill definitions and runs test cases against the associated rubric.
 2. **CI Workflow**: The `.github/workflows/automated-evaluation.yml` runs on every PR that modifies a skill.
 
-#### Setting up Automated Scoring
-To enable real automated scoring, you must:
-1. Integrate an LLM provider into `scripts/evaluate.py`.
-2. Provide an API key (e.g., `OPENAI_API_KEY`) as a GitHub Secret.
-3. Update the script to send the (Skill + Test Case + Rubric) to the judge model and return a failure if scores fall below a threshold (e.g., average score < 4).
+#### Setting up Automated Scoring (Production)
+
+The evaluation framework is production-ready and supports OpenAI and GitHub Models out of the box.
+
+1. **API Keys**:
+   - For **OpenAI**: Add `OPENAI_API_KEY` to your GitHub Repository Secrets.
+   - For **GitHub Models**: The workflow uses the default `GITHUB_TOKEN`. Ensure your token has access to the GitHub Models marketplace.
+
+2. **Thresholds**:
+   - The script `scripts/evaluate.py` enforces a **4.0/5.0 quality threshold**.
+   - If a skill's average score across all test cases falls below 4.0, the CI job will fail, preventing poor-quality skills from being merged.
+
+3. **Running Locally**:
+   ```bash
+   pip install -r scripts/requirements.txt
+   export OPENAI_API_KEY=your_key_here
+   python scripts/evaluate.py --skill agile-story-writer
+   ```
 
 ### LLM-as-a-Judge Prompting
 When using a model (e.g., GPT-4o) to evaluate, use the following prompt pattern:

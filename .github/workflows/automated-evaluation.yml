@@ -7,6 +7,10 @@ on:
         description: 'Specific skill to evaluate (leave blank for all)'
         required: false
         default: ''
+      model:
+        description: 'Model to use as judge'
+        required: false
+        default: 'gpt-4o'
   pull_request:
     paths:
       - '.github/skills/**'
@@ -26,12 +30,18 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
       - name: Run Evaluation Script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_MODELS_ENDPOINT: "https://models.inference.ai.azure.com"
         run: |
-          # In a production setup, you would provide API keys here
-          # env:
-          #   JUDGE_LLM_API_KEY: ${{ secrets.JUDGE_LLM_API_KEY }}
-          python scripts/evaluate.py --skill "${{ github.event.inputs.skill }}"
+          # The script will run in mock mode if keys are missing,
+          # but will perform real evaluation if secrets are provided.
+          python scripts/evaluate.py --skill "${{ github.event.inputs.skill }}" --model "${{ github.event.inputs.model || 'gpt-4o' }}"
 
       - name: Report Results
-        run: echo "Evaluation complete. See logs for detailed scores."
+        run: echo "Evaluation complete. Scores below 4.0 will cause CI failure."
