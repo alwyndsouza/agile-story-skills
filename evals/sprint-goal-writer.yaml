@@ -2,18 +2,18 @@ description: "Sprint Goal Writer — output quality eval"
 
 # Model used to invoke the skill (candidate)
 providers:
-  - id: {{env.EVAL_PROVIDER}}:{{env.EVAL_MODEL}}
+  - id: "{{env.EVAL_MODEL}}"
     config:
       temperature: 0
 
 prompts:
-  - file://evals/prompts/sprint-goal-writer.yaml
+  - file://prompts/sprint-goal-writer.yaml
 
 # llm-rubric assertions use a separate grader call.
 # Explicitly set it to Anthropic so we never fall back to the OpenAI default.
 defaultTest:
   options:
-    provider: {{env.EVAL_PROVIDER}}:{{env.EVAL_MODEL}}
+    provider: "{{env.EVAL_MODEL}}"
 
 tests:
   # ── TC1: Focused stories — single outcome-based goal ─────────────────────
