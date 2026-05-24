@@ -1,59 +1,144 @@
 # Evaluation Framework for Agile Story Skills
 
-This document describes how to evaluate the quality and effectiveness of the skills in this repository.
+This document describes how to evaluate the quality and consistency of the four
+skills in this repository and how to detect skill drift over time.
+
+---
 
 ## Overview
 
-Each skill contains an `evaluation/` directory with:
-1. **`rubric.md`**: A scoring guide for evaluating output quality across key dimensions.
-2. **`test-cases.md`**: Standard inputs to verify skill behavior and consistency.
+Two layers of evaluation exist for every skill:
 
-## How to Evaluate
+| Layer | What it catches | Where it lives |
+|---|---|---|
+| **Human review** | Qualitative gaps a rubric can't fully capture — tone, framing, missing context | `evaluation/rubric.md` per skill |
+| **Automated eval** | Structural drift, anti-pattern failures, quality regression across model updates | `evals/*.yaml` (promptfoo) |
 
-### Manual Evaluation
-1. Provide the input from a `test-cases.md` to the Copilot Skill.
-2. Compare the output against the "Expected Characteristics" in the test case.
-3. Score the output using the `rubric.md`.
-4. Identify gaps and iterate on the `SKILL.md` or reference files.
+---
 
-### Automated Evaluation (CI/CD)
-This repository includes a framework for automated evaluation using GitHub Actions.
+## Automated Evaluation — promptfoo
 
-1. **Evaluation Script**: Located at `scripts/evaluate.py`, this script loads skill definitions and runs test cases against the associated rubric.
-2. **CI Workflow**: The `.github/workflows/automated-evaluation.yml` runs on every PR that modifies a skill.
+The automated layer uses **[promptfoo](https://promptfoo.dev/)**, an open-source
+LLM eval framework. It runs each skill's SKILL.md as a system prompt, sends test
+inputs, and evaluates the output with a mix of deterministic assertions and an
+LLM-as-judge.
 
-#### Setting up Automated Scoring (Production)
+### How it works
 
-The evaluation framework is production-ready and supports OpenAI and GitHub Models out of the box.
+```
+SKILL.md  ─────────────────────────────┐
+                                       ▼
+test input ──► [Anthropic Claude] ──► skill output ──► assertions ──► PASS / FAIL
+                                                             │
+                                              ┌──────────────┴──────────────┐
+                                         structural                    LLM-judge
+                                      (contains / not-contains)    (llm-rubric)
+```
 
-1. **API Keys**:
-   - For **OpenAI**: Add `OPENAI_API_KEY` to your GitHub Repository Secrets.
-   - For **GitHub Models**: Add `GITHUB_MODELS_TOKEN` to your GitHub Repository Secrets. Ensure the token has permissions for the Models marketplace.
+**Structural assertions** are deterministic — they check that the output contains
+required box headers, section labels, and keywords (e.g. `╔══`, `GIVEN`, `WHEN`,
+`THEN`, `Scope — OUT`). A model update that drops a required section fails
+immediately with no LLM call required.
 
-2. **Thresholds**:
-   - The script `scripts/evaluate.py` enforces a **4.0/5.0 quality threshold**.
-   - If a skill's average score across all test cases falls below 4.0, the CI job will fail, preventing poor-quality skills from being merged.
+**LLM-judge assertions** (`llm-rubric`) evaluate qualitative quality — e.g.
+"the title starts with an action verb" or "the HMW statement has a measurable
+objective". These use a separate grader call against the same model.
 
-3. **Running Locally**:
-   ```bash
-   pip install -r scripts/requirements.txt
-   export OPENAI_API_KEY=your_key_here
-   python scripts/evaluate.py --skill agile-story-writer
-   ```
+### Running locally
 
-### LLM-as-a-Judge Prompting
-When using a model (e.g., GPT-4o) to evaluate, use the following prompt pattern:
+```bash
+# Install promptfoo once
+npm install -g promptfoo
 
-> "You are an expert Agile Coach. Evaluate the following AI Skill output against the provided rubric. For each category, provide a score from 1 to 5 and a brief justification. If the average score is below 4, provide specific instructions for rewriting the skill definition to fix the gaps."
+# Set your Anthropic API key
+export ANTHROPIC_API_KEY=sk-ant-...
 
-**Inputs:**
-- **Skill Definition**: [Paste `SKILL.md`]
-- **Test Case**: [Paste from `test-cases.md`]
-- **AI Output**: [The output you want to evaluate]
-- **Rubric**: [Paste `rubric.md`]
+# Eval one skill
+npx promptfoo eval --config evals/agile-story-writer.yaml
 
-## Skills Evaluation Links
-- [Agile Story Writer Rubric](.github/skills/agile-story-writer/evaluation/rubric.md)
-- [Agile Story Splitter Rubric](.github/skills/agile-story-splitter/evaluation/rubric.md)
-- [Problem Framing Rubric](.github/skills/problem-framing/evaluation/rubric.md)
-- [Sprint Goal Writer Rubric](.github/skills/sprint-goal-writer/evaluation/rubric.md)
+# Eval all four skills
+for f in evals/*.yaml; do npx promptfoo eval --config "$f"; done
+
+# Open the HTML results report
+npx promptfoo view
+```
+
+### Running in CI
+
+The workflow `.github/workflows/automated-evaluation.yml` runs on every PR that
+touches `.github/skills/**` or `evals/**`.
+
+Add `ANTHROPIC_API_KEY` to **Settings → Secrets → Actions** in the repository.
+Without the secret the eval step is skipped with a visible warning — it never
+silently passes on mock data.
+
+---
+
+## Eval files
+
+```
+evals/
+├── prompts/
+│   ├── agile-story-writer.yaml     # chat prompt: SKILL.md as system, {{input}} as user
+│   ├── agile-story-splitter.yaml
+│   ├── problem-framing.yaml
+│   └── sprint-goal-writer.yaml
+├── agile-story-writer.yaml         # test cases + assertions for story writer
+├── agile-story-splitter.yaml       # test cases + assertions for story splitter
+├── problem-framing.yaml            # test cases + assertions for problem framing
+└── sprint-goal-writer.yaml         # test cases + assertions for sprint goal writer
+```
+
+Each config file covers three test cases:
+
+| TC | Pattern | What it tests |
+|---|---|---|
+| TC1 | Happy path | Core skill output structure and quality |
+| TC2 | Edge case | Skill-specific boundary (e.g. too-few stories, pattern-pinned split) |
+| TC3 | Anti-pattern | Skill correctly refuses or redirects a bad input |
+
+---
+
+## Manual Evaluation — Rubrics
+
+Each skill has a `evaluation/rubric.md` with a 1/3/5 scoring table. Use it when:
+
+- Reviewing a PR that changes a SKILL.md
+- Doing a quarterly drift audit
+- Comparing output quality across two model versions
+
+### How to use
+
+1. Pick a test case input from `evaluation/test-cases.md`.
+2. Invoke the skill in Copilot / Claude Code / your preferred client.
+3. Score each rubric dimension from 1 to 5.
+4. If any dimension scores below 3, open a skill-improvement issue using the
+   template in `.github/ISSUE_TEMPLATE/skill-improvement.md`.
+
+### Rubric links
+
+- [Agile Story Writer](.github/skills/agile-story-writer/evaluation/rubric.md)
+- [Agile Story Splitter](.github/skills/agile-story-splitter/evaluation/rubric.md)
+- [Problem Framing](.github/skills/problem-framing/evaluation/rubric.md)
+- [Sprint Goal Writer](.github/skills/sprint-goal-writer/evaluation/rubric.md)
+
+---
+
+## Detecting drift
+
+Skill drift occurs when a model update or SKILL.md edit causes the output to
+silently regress — missing sections, weaker ACs, vague personas. The promptfoo
+suite catches this automatically because:
+
+- **Structural assertions** fail the moment a required section disappears from
+  output, regardless of why.
+- **Anti-pattern assertions** catch regressions where the skill stops refusing
+  bad inputs (e.g. accepting a horizontal slice it should reject).
+- **LLM-judge assertions** detect qualitative decay that no keyword check can
+  catch (e.g. ACs that use GIVEN/WHEN/THEN syntax but have non-testable THEN
+  clauses).
+
+Run the full suite on a schedule or after any Copilot / Claude model update to
+get a drift baseline. If scores drop, compare the new output to `examples/`
+golden files to identify which rule is no longer being followed, then tighten
+the SKILL.md instruction that governs it.

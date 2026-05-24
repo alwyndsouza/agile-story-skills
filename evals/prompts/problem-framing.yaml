@@ -1,0 +1,4 @@
+- role: system
+  content: "file://.github/skills/problem-framing/SKILL.md"
+- role: user
+  content: "{{input}}"

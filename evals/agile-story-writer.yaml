@@ -1,0 +1,100 @@
+description: "Agile Story Writer — output quality eval"
+
+providers:
+  - id: anthropic:claude-3-7-sonnet-20250219
+    config:
+      temperature: 0
+
+prompts:
+  - file://evals/prompts/agile-story-writer.yaml
+
+tests:
+  # ── TC1: Natural language request ────────────────────────────────────────
+  - description: "TC1: Natural language — ingestion alerting story"
+    vars:
+      input: "Write a story for adding alerting on failed ingestion jobs."
+    assert:
+      # Structural — must always be present
+      - type: contains
+        value: "╔══"
+      - type: contains
+        value: "AGILE STORY"
+      - type: contains
+        value: "GIVEN"
+      - type: contains
+        value: "WHEN"
+      - type: contains
+        value: "THEN"
+      - type: contains
+        value: "Scope — IN"
+      - type: contains
+        value: "Scope — OUT"
+      - type: contains
+        value: "DEFINITION OF READY"
+      - type: contains
+        value: "DEFINITION OF DONE"
+      - type: not-contains
+        value: "as a user"
+      # Quality — LLM judge
+      - type: llm-rubric
+        value: >
+          The TITLE field starts with an action verb such as Add, Build, Create,
+          Fix, Migrate, or Expose. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The story has at least 3 acceptance criteria, each written in
+          GIVEN/WHEN/THEN format with a specific, testable THEN clause.
+          No subjective language like "fast", "good", or "works correctly".
+          Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The POINTS field contains a Fibonacci number (1, 2, 3, 5, 8, or 13)
+          followed by a one-line rationale explaining the complexity. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The Non-Functional Requirements table has specific, measurable entries
+          for Performance, Security, and Observability (not generic placeholders).
+          Answer PASS or FAIL.
+
+  # ── TC2: Bug ticket ───────────────────────────────────────────────────────
+  - description: "TC2: Bug ticket — duplicate invoice records"
+    vars:
+      input: >
+        Write a bug ticket for duplicate invoice records appearing in the
+        daily financial load.
+    assert:
+      - type: contains
+        value: "╔══"
+      - type: contains
+        value: "GIVEN"
+      - type: contains
+        value: "WHEN"
+      - type: contains
+        value: "THEN"
+      - type: not-contains
+        value: "as a user"
+      - type: llm-rubric
+        value: >
+          The TYPE field is set to "Bug". Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The context or description explains the business impact of duplicate
+          invoices (e.g. incorrect financial figures, reconciliation errors,
+          risk of double payment). Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          Scope OUT explicitly excludes at least one item that was not requested
+          (e.g. historical data cleanup, other invoice types). Answer PASS or FAIL.
+
+  # ── TC3: Vague input — must ask before generating ────────────────────────
+  - description: "TC3: Anti-pattern — vague input must trigger clarifying questions"
+    vars:
+      input: "Fix the pipeline."
+    assert:
+      - type: not-contains
+        value: "╔══"
+      - type: llm-rubric
+        value: >
+          The response asks for at least one of: (1) the system or component
+          affected, (2) the persona who benefits, or (3) the core outcome
+          expected. It does NOT generate a complete story. Answer PASS or FAIL.

@@ -1,0 +1,112 @@
+description: "Agile Story Splitter — output quality eval"
+
+providers:
+  - id: anthropic:claude-3-7-sonnet-20250219
+    config:
+      temperature: 0
+
+prompts:
+  - file://evals/prompts/agile-story-splitter.yaml
+
+tests:
+  # ── TC1: Large story — should split into 2-5 vertical slices ─────────────
+  - description: "TC1: 13-point story split — checkout migration"
+    vars:
+      input: |
+        This story is too big, split it:
+
+        TITLE:    Migrate full checkout flow to new payment gateway
+        TYPE:     Story
+        PRIORITY: High
+        POINTS:   13
+
+        As a finance analyst,
+        I want the checkout flow to use the new payment gateway,
+        So that transaction failures drop below 0.5% and PCI compliance is maintained.
+
+        Scope IN: payment form, gateway API integration, error handling,
+                  receipts, refunds, 3DS authentication
+        Scope OUT: loyalty points, gift cards
+    assert:
+      - type: contains
+        value: "SPLIT SUMMARY"
+      - type: contains
+        value: "INVEST VALIDATION"
+      - type: contains
+        value: "Pattern used:"
+      - type: contains
+        value: "╔══"
+      - type: not-contains
+        value: "as a user"
+      - type: llm-rubric
+        value: >
+          The response produces between 2 and 5 sub-stories.
+          Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          Every sub-story is a vertical slice that delivers standalone,
+          user-visible value on its own. None of the slices are horizontal
+          splits (e.g. "frontend story" / "backend story"). Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          Each sub-story has at least 2 acceptance criteria written in
+          GIVEN/WHEN/THEN format. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          Each sub-story carries a Fibonacci point estimate of 8 or fewer,
+          with a one-line rationale. Answer PASS or FAIL.
+
+  # ── TC2: Pattern-pinned — must use P1 Workflow Steps ─────────────────────
+  - description: "TC2: Pattern-pinned — forced P1 Workflow Steps"
+    vars:
+      input: |
+        Split this using workflow steps:
+
+        TITLE:  Add expense report approval flow
+        TYPE:   Story
+        POINTS: 13
+
+        As a finance analyst,
+        I want to submit, track, and get approval for expense reports,
+        So that reimbursements are processed within 5 business days.
+    assert:
+      - type: contains
+        value: "╔══"
+      - type: contains
+        value: "SPLIT SUMMARY"
+      - type: llm-rubric
+        value: >
+          The split uses Pattern P1 (Workflow Steps) as explicitly instructed.
+          The SPLIT SUMMARY names "P1" or "Workflow Steps" as the pattern used.
+          Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The INVEST validation table flags the sequencing dependency (I column)
+          for any story that depends on a sibling slice. Answer PASS or FAIL.
+
+  # ── TC3: Anti-pattern — must refuse horizontal slice ─────────────────────
+  - description: "TC3: Anti-pattern refusal — horizontal FE/BE split request"
+    vars:
+      input: |
+        Split this story into a frontend story and a backend story:
+
+        TITLE:  Build data quality dashboard
+        TYPE:   Story
+        POINTS: 8
+
+        As a data engineer,
+        I want a dashboard showing pipeline quality metrics,
+        So that I can identify failing checks before they impact downstream consumers.
+    assert:
+      - type: not-contains
+        value: "Frontend Story"
+      - type: not-contains
+        value: "Backend Story"
+      - type: llm-rubric
+        value: >
+          The response refuses the horizontal FE/BE split, explaining that
+          neither slice delivers standalone value. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The response offers a vertical slice alternative (e.g. a P1, P4,
+          or P5 split) instead of the horizontal request. Answer PASS or FAIL.
