@@ -26,7 +26,7 @@ vague output.
 
 If the input is too vague to complete a story, ask only:
 1. The system or component affected
-2. The persona who benefits
+2. The persona who benefits (refer to `references/personas.md`)
 3. The core outcome expected
 
 Then generate the story from those three inputs without further prompting.
@@ -150,8 +150,11 @@ DEFINITION OF DONE ✅
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
+- `references/SOURCES.md` — framework citations (Dan North, Bill Wake)
 - `references/story-format-guide.md` — field-by-field authoring rules
 - `references/personas.md` — approved team personas
 - `examples/good-story.md` — complete reference story
 - `examples/bad-story.md` — annotated anti-patterns
 - `assets/story-template.txt` — blank template for copy-paste into any agile tool
+- `evaluation/rubric.md` — quality scoring guide
+- `evaluation/test-cases.md` — standard test inputs

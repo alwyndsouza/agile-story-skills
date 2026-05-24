@@ -181,7 +181,10 @@ I — Independent · N — Negotiable · V — Valuable · E — Estimable · S 
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
+- `references/SOURCES.md` — framework citations (Richard Lawrence, Peter Green)
 - `references/split-patterns.md` — the eight patterns with before/after examples and pitfalls
 - `examples/split-example.md` — full worked example: 13-point story → 3 sprint-ready slices
 - `../agile-story-writer/references/personas.md` — approved personas (shared with writer)
 - `../agile-story-writer/references/story-format-guide.md` — field-by-field authoring rules
+- `evaluation/rubric.md` — quality scoring guide
+- `evaluation/test-cases.md` — standard test inputs
