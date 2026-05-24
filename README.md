@@ -161,6 +161,58 @@ done
 
 To upgrade later: `git submodule update --remote .github/skills/_upstream`.
 
+## Skill Quality Assurance
+
+Every skill is validated through a **two-layer evaluation framework**:
+
+| Layer | What it catches | Location |
+|---|---|---|
+| **Human review** | Qualitative gaps, tone, framing, missing context | `evaluation/rubric.md` per skill |
+| **Automated (promptfoo)** | Structural drift, anti-patterns, quality regression | `evals/*.yaml` with deterministic + LLM-judge assertions |
+
+### Running Evals Locally
+
+```bash
+# Install promptfoo once
+npm install -g promptfoo
+
+# Set up environment
+cp .env.example .env
+# Edit .env and add your API key (see "Supported LLM Providers" below)
+
+# Run evals
+npx promptfoo eval --config evals/agile-story-writer.yaml
+
+# View HTML results
+npx promptfoo view
+```
+
+**Supported LLM Providers:**
+
+| Provider | API Key | Example |
+|----------|---------|---------|
+| **Anthropic** (default) | `ANTHROPIC_API_KEY` | `EVAL_MODEL=anthropic:claude-3-5-sonnet-20241022` |
+| **OpenAI** | `OPENAI_API_KEY` | `EVAL_MODEL=openai:gpt-4o` |
+| **Google** | `GOOGLE_API_KEY` | `EVAL_MODEL=google:gemini-2.0-flash` |
+| **Open models** | `OPENROUTER_API_KEY` | `EVAL_MODEL=openrouter:meta-llama/llama-2-70b` |
+
+For complete evaluation details, see [EVALUATION.md](EVALUATION.md).
+
+### Optional: Token Compression
+
+Install [caveman](https://github.com/JuliusBrussee/caveman) to reduce output tokens by ~60%:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash
+
+# Use in your session
+/caveman
+npx promptfoo eval --config evals/agile-story-writer.yaml
+/caveman-stats  # See token savings
+```
+
+---
+
 ## How to Use
 
 Each skill ships several invoke modes. Most are triggered by natural-language prompts
@@ -240,35 +292,69 @@ agile-story-skills/
 │   │   ├── agile-story-writer/        # Story authoring (tool-agnostic format)
 │   │   │   ├── SKILL.md
 │   │   │   ├── examples/{good,bad}-story.md
+│   │   │   ├── evaluation/rubric.md   # Human review rubric (1/3/5 scoring)
 │   │   │   ├── references/{personas,story-format-guide}.md
 │   │   │   └── assets/story-template.txt
 │   │   ├── agile-story-splitter/      # Humanizing Work 8-pattern splitter
 │   │   │   ├── SKILL.md
 │   │   │   ├── examples/split-example.md
+│   │   │   ├── evaluation/rubric.md
 │   │   │   └── references/split-patterns.md
 │   │   ├── problem-framing/           # MITRE Problem Framing Canvas (3 phases / 8 Qs)
 │   │   │   ├── SKILL.md
 │   │   │   ├── examples/framing-example.md
+│   │   │   ├── evaluation/rubric.md
 │   │   │   └── assets/canvas-template.md
 │   │   └── sprint-goal-writer/        # Outcome-based sprint goal drafter
 │   │       ├── SKILL.md
 │   │       ├── examples/goal-example.md
+│   │       ├── evaluation/rubric.md
 │   │       └── assets/goal-template.md
-│   ├── workflows/validate-skill.yml   # CI validation for structure, markdown, frontmatter
+│   ├── workflows/
+│   │   ├── validate-skill.yml         # CI: structure, markdown, frontmatter validation
+│   │   └── automated-evaluation.yml   # CI: promptfoo evals on every PR (all providers)
 │   ├── ISSUE_TEMPLATE/                # Skill improvement issue template
 │   ├── CODEOWNERS                     # Ownership and review enforcement
 │   └── PULL_REQUEST_TEMPLATE.md       # PR quality checklist
+├── evals/                              # Promptfoo evaluation configs
+│   ├── prompts/
+│   │   ├── agile-story-writer.yaml    # Chat prompt: SKILL.md + {{input}}
+│   │   ├── agile-story-splitter.yaml
+│   │   ├── problem-framing.yaml
+│   │   └── sprint-goal-writer.yaml
+│   ├── agile-story-writer.yaml         # Test cases + assertions (TC1/TC2/TC3)
+│   ├── agile-story-splitter.yaml
+│   ├── problem-framing.yaml
+│   └── sprint-goal-writer.yaml
 ├── docs/
 │   └── enterprise-deployment-guide.md # Enterprise installation and governance guidance
+├── .env.example                        # Multi-provider LLM configuration template
+├── AGENTS.md                           # Guidelines for AI agents (Claude Code, Copilot, Cursor)
+├── EVALUATION.md                       # Evaluation framework: human review + automated evals
 ├── README.md
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 └── SECURITY.md
 ```
 
+## For AI Agents
+
+If you're an AI agent (Claude Code, GitHub Copilot, Cursor, etc.) using these skills:
+
+- **Read [AGENTS.md](AGENTS.md)** for skill usage guidelines, immutability rules, and package manager standards
+- When you invoke `/agile-story-writer`, `/agile-story-splitter`, `/problem-framing`, or `/sprint-goal-writer`, follow the deterministic output format defined in each `SKILL.md`
+- SKILL.md files are source-of-truth and must never be modified in-session — changes require a PR
+- Always use [uv](https://docs.astral.sh/uv/) for Python package management, not pip
+
+## Quality & Testing
+
+- **Human review rubric:** See `evaluation/rubric.md` in each skill directory
+- **Automated evaluation:** See [EVALUATION.md](EVALUATION.md) for the two-layer eval framework, how to run evals locally, and multi-provider LLM support
+- **Skill drift detection:** Automated evals catch regressions in structure, output quality, and anti-pattern refusal
+
 ## Enterprise Deployment
 
-See [docs/enterprise-deployment-guide.md](docs/enterprise-deployment-guide.md).
+See [docs/enterprise-deployment-guide.md](docs/enterprise-deployment-guide.md) for org-wide installation, governance, and compliance guidance.
 
 ## Contributing
 
