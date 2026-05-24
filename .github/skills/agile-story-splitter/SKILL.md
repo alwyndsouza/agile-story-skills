@@ -10,8 +10,13 @@ description: >
 license: Proprietary — Internal use only
 metadata:
   author: engineering-team
-  version: "1.0.0"
-  compatibility: GitHub Copilot Agent Mode (VS Code), Copilot Cloud Agent
+  version: "1.1.0"
+  compatibility:
+    - GitHub Copilot (Agent Mode, Cloud)
+    - Claude Code / Anthropic Agent Skills
+    - OpenAI Codex / Custom GPTs
+    - Google Gemini CLI
+    - Cursor
 ---
 
 # Agile Story Splitter Skill
