@@ -142,6 +142,16 @@ explain the gap rather than tick a box that isn't true.
 
 ---
 
+## Self-Evaluation & Rewriting
+
+If the user asks to "self-evaluate" or "improve your own performance", follow these steps:
+1. Load `evaluation/test-cases.md` and `evaluation/rubric.md`.
+2. Run a self-critique of your recent outputs against the rubric.
+3. Identify specific gaps (e.g., feature lists, activity-based goals).
+4. Propose a rewritten version of your own `SKILL.md` or goal templates to the user.
+
+---
+
 ## Reference Files (loaded progressively by Copilot as needed)
 - `references/SOURCES.md` — framework citations (Scrum Guide)
 - `assets/goal-template.md` — blank goal output in the box format above
