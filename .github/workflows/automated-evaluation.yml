@@ -1,0 +1,85 @@
+name: Skill Eval (promptfoo)
+
+on:
+  workflow_dispatch:
+    inputs:
+      skill:
+        description: "Skill to eval: agile-story-writer | agile-story-splitter | problem-framing | sprint-goal-writer (blank = all)"
+        required: false
+        default: ""
+  pull_request:
+    paths:
+      - ".github/skills/**"
+      - "evals/**"
+
+permissions:
+  contents: read
+
+jobs:
+  eval:
+    name: promptfoo eval
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install promptfoo
+        run: npm install -g promptfoo@latest
+
+      # Guard: skip (with a visible warning) when no API key is configured.
+      # This keeps forks and first-time contributors unblocked without silently
+      # passing on mock data. Supports any provider (Anthropic, OpenAI, Google, OpenRouter).
+      - name: Check API key
+        id: key_check
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ] && [ -z "$OPENAI_API_KEY" ] && [ -z "$GOOGLE_API_KEY" ] && [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "has_key=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::No API key secret configured — eval skipped. \
+          Add one of: ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY, or OPENROUTER_API_KEY \
+          in Settings → Secrets → Actions to enable live CI evals."
+          else
+            echo "has_key=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+
+      - name: Run evals — specific skill
+        if: steps.key_check.outputs.has_key == 'true' && github.event.inputs.skill != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          npx promptfoo eval \
+            --config "evals/${{ github.event.inputs.skill }}.yaml" \
+            --ci
+
+      - name: Run evals — all skills
+        if: steps.key_check.outputs.has_key == 'true' && github.event.inputs.skill == ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          EXIT=0
+          for config in evals/agile-story-writer.yaml \
+                        evals/agile-story-splitter.yaml \
+                        evals/problem-framing.yaml \
+                        evals/sprint-goal-writer.yaml; do
+            echo "──────────────────────────────────────────"
+            echo "Evaluating: $config"
+            echo "──────────────────────────────────────────"
+            npx promptfoo eval --config "$config" --ci || EXIT=1
+          done
+          exit $EXIT

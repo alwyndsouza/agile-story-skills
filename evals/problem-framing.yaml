@@ -1,0 +1,93 @@
+description: "Problem Framing — output quality eval"
+
+# Model used to invoke the skill (candidate)
+providers:
+  - id: {{env.EVAL_PROVIDER}}:{{env.EVAL_MODEL}}
+    config:
+      temperature: 0
+
+prompts:
+  - file://evals/prompts/problem-framing.yaml
+
+# llm-rubric assertions use a separate grader call.
+# Explicitly set it to Anthropic so we never fall back to the OpenAI default.
+defaultTest:
+  options:
+    provider: {{env.EVAL_PROVIDER}}:{{env.EVAL_MODEL}}
+
+tests:
+  # ── TC1: Non-interactive — infer and fill full canvas ─────────────────────
+  - description: "TC1: Non-interactive — solution-first input reframed as symptom"
+    vars:
+      input: "Just frame this for me: We need a dashboard to monitor pipeline latency."
+    assert:
+      - type: contains
+        value: "PROBLEM FRAMING CANVAS"
+      - type: contains
+        value: "PHASE 1 — LOOK INWARD"
+      - type: contains
+        value: "PHASE 2 — LOOK OUTWARD"
+      - type: contains
+        value: "PHASE 3 — REFRAME"
+      - type: contains
+        value: "How Might We:"
+      - type: contains
+        value: "Assumptions made"
+      - type: llm-rubric
+        value: >
+          Q1 (Problem symptoms) describes an observable symptom such as
+          "pipeline latency is not visible to the team" rather than restating
+          the solution "we need a dashboard". Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The problem statement follows the template: "The problem is: [who]
+          struggles to [accomplish what] because [root cause], which leads to
+          [consequence]." Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The How Might We statement includes a measurable or directional
+          objective (not vague language like "improve experience" or "make
+          it better"). Answer PASS or FAIL.
+
+  # ── TC2: Interactive start — must ask exactly one question ────────────────
+  - description: "TC2: Interactive start — asks only Q1, no canvas yet"
+    vars:
+      input: "/problem-framing"
+    assert:
+      - type: not-contains
+        value: "PROBLEM FRAMING CANVAS"
+      - type: not-contains
+        value: "PHASE 2"
+      - type: llm-rubric
+        value: >
+          The response asks exactly one question — Q1 asking the user to
+          describe the problem as symptoms. It does not ask multiple questions
+          at once or skip ahead to Phase 2 or 3. Answer PASS or FAIL.
+
+  # ── TC3: Context dump — pre-populates and confirms per phase ──────────────
+  - description: "TC3: Context dump — parses incident report into canvas"
+    vars:
+      input: |
+        Here's what we know. Frame it.
+
+        Our data engineers spend 2 hours every Monday manually reconciling
+        row counts between the source database and the data warehouse.
+        The mismatch happens because the ETL job does not handle late-arriving
+        records from the upstream API. Three times in the last quarter this
+        caused the finance team to report incorrect weekly figures.
+    assert:
+      - type: contains
+        value: "PROBLEM FRAMING CANVAS"
+      - type: contains
+        value: "PHASE 1 — LOOK INWARD"
+      - type: contains
+        value: "How Might We:"
+      - type: llm-rubric
+        value: >
+          The canvas was pre-populated using details from the context dump
+          (e.g. the 2-hour Monday reconciliation, late-arriving records,
+          the finance team impact). Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          Fields inferred from the dump are marked "(inferred)" as required
+          by the non-interactive mode rules. Answer PASS or FAIL.

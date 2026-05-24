@@ -10,8 +10,13 @@ description: >
 license: Proprietary — Internal use only
 metadata:
   author: engineering-team
-  version: "1.0.0"
-  compatibility: GitHub Copilot Agent Mode (VS Code), Copilot Cloud Agent
+  version: "1.1.0"
+  compatibility:
+    - GitHub Copilot (Agent Mode, Cloud)
+    - Claude Code / Anthropic Agent Skills
+    - OpenAI Codex / Custom GPTs
+    - Google Gemini CLI
+    - Cursor
 ---
 
 # Problem Framing Skill
@@ -150,5 +155,8 @@ before committing to backlog work based on the canvas.
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
+- `references/SOURCES.md` — framework citations (MITRE)
 - `assets/canvas-template.md` — blank canvas in the box format above for copy-paste
 - `examples/framing-example.md` — full worked example: vague pipeline-speed request → canvas
+- `evaluation/rubric.md` — quality scoring guide
+- `evaluation/test-cases.md` — standard test inputs

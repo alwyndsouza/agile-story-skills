@@ -1,0 +1,93 @@
+description: "Sprint Goal Writer — output quality eval"
+
+# Model used to invoke the skill (candidate)
+providers:
+  - id: {{env.EVAL_PROVIDER}}:{{env.EVAL_MODEL}}
+    config:
+      temperature: 0
+
+prompts:
+  - file://evals/prompts/sprint-goal-writer.yaml
+
+# llm-rubric assertions use a separate grader call.
+# Explicitly set it to Anthropic so we never fall back to the OpenAI default.
+defaultTest:
+  options:
+    provider: {{env.EVAL_PROVIDER}}:{{env.EVAL_MODEL}}
+
+tests:
+  # ── TC1: Focused stories — single outcome-based goal ─────────────────────
+  - description: "TC1: Focused stories — API security hardening sprint"
+    vars:
+      input: |
+        Write a sprint goal for these stories:
+        1. Add OAuth 2.0 to the data ingestion API
+        2. Mask PII fields in all pipeline log outputs
+        3. Rotate service account credentials used by ETL jobs
+        4. Enforce mTLS between microservices in the data platform
+        5. Add rate limiting to the public metrics API
+    assert:
+      - type: contains
+        value: "SPRINT GOAL"
+      - type: contains
+        value: "GOAL:"
+      - type: contains
+        value: "RATIONALE:"
+      - type: contains
+        value: "STORIES IN SCOPE:"
+      - type: contains
+        value: "SPRINT GOAL HEALTH CHECK"
+      - type: llm-rubric
+        value: >
+          The GOAL is a single sentence. It does not use "and" to join multiple
+          features (e.g. not "Implement OAuth and mask PII and rotate credentials").
+          Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The GOAL is outcome-based — it describes an observable result that
+          exists independently of which specific features shipped (e.g.
+          "harden the data platform against credential theft and unauthorised
+          access"). Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The GOAL names who benefits — either a specific persona (e.g. data
+          engineer, operations team) or a downstream system. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          All five health-check boxes are ticked or, where one is not ticked,
+          a clear explanation is given. Answer PASS or FAIL.
+
+  # ── TC2: Too few stories — must ask before drafting ───────────────────────
+  - description: "TC2: Too few stories — declines and asks for more"
+    vars:
+      input: |
+        Write a sprint goal for:
+        1. Fix null pointer exception in the invoice loader
+        2. Update Airflow to version 2.9
+    assert:
+      - type: not-contains
+        value: "GOAL:"
+      - type: llm-rubric
+        value: >
+          The response declines to draft a sprint goal and asks for more
+          stories or context before proceeding. Answer PASS or FAIL.
+
+  # ── TC3: Unrelated stories — flags and offers two candidates ─────────────
+  - description: "TC3: Unrelated stories — no common thread, offers two candidates"
+    vars:
+      input: |
+        Write a sprint goal for these stories:
+        1. Migrate billing service to Kubernetes
+        2. Add dark mode to the analytics dashboard
+        3. Fix a bug in the payroll export job
+        4. Update the onboarding email sequence
+        5. Add two-factor authentication to the admin portal
+    assert:
+      - type: llm-rubric
+        value: >
+          The response explicitly flags that the stories do not share an obvious
+          common outcome or theme. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The response offers two or more candidate goal options rather than
+          forcing a single goal across unrelated stories. Answer PASS or FAIL.

@@ -10,8 +10,13 @@ description: >
 license: Proprietary — Internal use only
 metadata:
   author: engineering-team
-  version: "1.0.0"
-  compatibility: GitHub Copilot Agent Mode (VS Code), Copilot Cloud Agent
+  version: "1.1.0"
+  compatibility:
+    - GitHub Copilot (Agent Mode, Cloud)
+    - Claude Code / Anthropic Agent Skills
+    - OpenAI Codex / Custom GPTs
+    - Google Gemini CLI
+    - Cursor
 ---
 
 # Sprint Goal Writer Skill
@@ -143,6 +148,9 @@ explain the gap rather than tick a box that isn't true.
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
+- `references/SOURCES.md` — framework citations (Scrum Guide)
 - `assets/goal-template.md` — blank goal output in the box format above
 - `examples/goal-example.md` — worked example: 6 stories → recommended goal + alternatives
 - `../agile-story-writer/references/personas.md` — approved personas (shared)
+- `evaluation/rubric.md` — quality scoring guide
+- `evaluation/test-cases.md` — standard test inputs

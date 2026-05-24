@@ -1,0 +1,4 @@
+- role: system
+  content: "file://.github/skills/agile-story-writer/SKILL.md"
+- role: user
+  content: "{{input}}"

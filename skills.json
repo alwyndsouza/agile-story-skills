@@ -1,0 +1,31 @@
+{
+  "name": "Agile Story Skills",
+  "version": "1.1.0",
+  "description": "A bundle of four AI skills for agile engineering and product teams.",
+  "skills": [
+    {
+      "id": "agile-story-writer",
+      "path": ".github/skills/agile-story-writer/SKILL.md",
+      "description": "Generate well-structured agile user stories.",
+      "frameworks": ["BDD", "INVEST", "Fibonacci"]
+    },
+    {
+      "id": "agile-story-splitter",
+      "path": ".github/skills/agile-story-splitter/SKILL.md",
+      "description": "Break oversized stories into vertical slices.",
+      "frameworks": ["Humanizing Work", "INVEST"]
+    },
+    {
+      "id": "problem-framing",
+      "path": ".github/skills/problem-framing/SKILL.md",
+      "description": "Frame the right problem before writing stories.",
+      "frameworks": ["MITRE Canvas", "HMW"]
+    },
+    {
+      "id": "sprint-goal-writer",
+      "path": ".github/skills/sprint-goal-writer/SKILL.md",
+      "description": "Draft focused, outcome-based sprint goals.",
+      "frameworks": ["Scrum Guide"]
+    }
+  ]
+}

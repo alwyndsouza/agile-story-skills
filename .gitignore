@@ -18,3 +18,9 @@ npm-debug.log
 *.tmp
 *.log
 *.swp
+
+# Local environment — never commit secrets or personal overrides
+.env
+
+# promptfoo local cache and results
+.promptfoo/
