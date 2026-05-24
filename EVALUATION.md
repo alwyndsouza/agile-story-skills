@@ -50,8 +50,9 @@ objective". These use a separate grader call against the same model.
 # Install promptfoo once
 npm install -g promptfoo
 
-# Set your Anthropic API key
-export ANTHROPIC_API_KEY=sk-ant-...
+# Copy the example env file and fill in your values
+cp .env.example .env
+# Then edit .env — set ANTHROPIC_API_KEY and optionally EVAL_MODEL
 
 # Eval one skill
 npx promptfoo eval --config evals/agile-story-writer.yaml
