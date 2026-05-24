@@ -36,7 +36,7 @@ jobs:
       - name: Run Evaluation Script
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_MODELS_TOKEN }}
           GITHUB_MODELS_ENDPOINT: "https://models.inference.ai.azure.com"
         run: |
           # The script will run in mock mode if keys are missing,

@@ -167,9 +167,9 @@ if __name__ == "__main__":
     if os.getenv("OPENAI_API_KEY"):
         from openai import OpenAI
         client = OpenAI()
-    elif os.getenv("GITHUB_TOKEN") and os.getenv("GITHUB_MODELS_ENDPOINT"):
+    elif os.getenv("GITHUB_MODELS_TOKEN") and os.getenv("GITHUB_MODELS_ENDPOINT"):
         from openai import OpenAI
-        client = OpenAI(base_url=os.getenv("GITHUB_MODELS_ENDPOINT"), api_key=os.getenv("GITHUB_TOKEN"))
+        client = OpenAI(base_url=os.getenv("GITHUB_MODELS_ENDPOINT"), api_key=os.getenv("GITHUB_MODELS_TOKEN"))
 
     success = True
     if args.skill:

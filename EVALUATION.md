@@ -28,7 +28,7 @@ The evaluation framework is production-ready and supports OpenAI and GitHub Mode
 
 1. **API Keys**:
    - For **OpenAI**: Add `OPENAI_API_KEY` to your GitHub Repository Secrets.
-   - For **GitHub Models**: The workflow uses the default `GITHUB_TOKEN`. Ensure your token has access to the GitHub Models marketplace.
+   - For **GitHub Models**: Add `GITHUB_MODELS_TOKEN` to your GitHub Repository Secrets. Ensure the token has permissions for the Models marketplace.
 
 2. **Thresholds**:
    - The script `scripts/evaluate.py` enforces a **4.0/5.0 quality threshold**.
