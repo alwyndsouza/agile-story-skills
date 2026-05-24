@@ -1,5 +1,6 @@
 description: "Agile Story Writer — output quality eval"
 
+# Model used to invoke the skill (candidate)
 providers:
   - id: anthropic:claude-3-7-sonnet-20250219
     config:
@@ -7,6 +8,12 @@ providers:
 
 prompts:
   - file://evals/prompts/agile-story-writer.yaml
+
+# llm-rubric assertions use a separate grader call.
+# Explicitly set it to Anthropic so we never fall back to the OpenAI default.
+defaultTest:
+  options:
+    provider: anthropic:claude-3-7-sonnet-20250219
 
 tests:
   # ── TC1: Natural language request ────────────────────────────────────────
