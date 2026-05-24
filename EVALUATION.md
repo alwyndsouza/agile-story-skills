@@ -28,11 +28,13 @@ LLM-as-judge.
 ```
 SKILL.md  ─────────────────────────────┐
                                        ▼
-test input ──► [Anthropic Claude] ──► skill output ──► assertions ──► PASS / FAIL
+test input ──► [LLM Model*] ──────────► skill output ──► assertions ──► PASS / FAIL
                                                              │
                                               ┌──────────────┴──────────────┐
                                          structural                    LLM-judge
                                       (contains / not-contains)    (llm-rubric)
+
+* Any supported provider: Anthropic, OpenAI, Google, or open models via OpenRouter
 ```
 
 **Structural assertions** are deterministic — they check that the output contains
@@ -52,7 +54,7 @@ npm install -g promptfoo
 
 # Copy the example env file and fill in your values
 cp .env.example .env
-# Then edit .env — set ANTHROPIC_API_KEY, EVAL_PROVIDER, and EVAL_MODEL
+# Then edit .env — set EVAL_MODEL and the corresponding API key for your provider
 
 # Eval one skill
 npx promptfoo eval --config evals/agile-story-writer.yaml
@@ -64,13 +66,27 @@ for f in evals/*.yaml; do npx promptfoo eval --config "$f"; done
 npx promptfoo view
 ```
 
+**Supported providers and models:**
+
+| Provider | API Key | Example Models | Setup |
+|---|---|---|---|
+| **Anthropic** | `ANTHROPIC_API_KEY` | `anthropic:claude-3-7-sonnet-20250219`<br>`anthropic:claude-opus-4-5` | Get key from [console.anthropic.com](https://console.anthropic.com) |
+| **OpenAI** | `OPENAI_API_KEY` | `openai:gpt-4o`<br>`openai:gpt-4-turbo` | Get key from [platform.openai.com](https://platform.openai.com) |
+| **Google** | `GOOGLE_API_KEY` | `google:gemini-2.0-flash`<br>`google:gemini-1.5-pro` | Get key from [Google AI Studio](https://aistudio.google.com) |
+| **Open models** | `OPENROUTER_API_KEY` | `openrouter:meta-llama/llama-2-70b`<br>`openrouter:mistralai/mistral-large` | Get key from [openrouter.ai](https://openrouter.ai) (includes Llama, Mistral, Dolphin, Nous models) |
+
 ### Running in CI
 
 The workflow `.github/workflows/automated-evaluation.yml` runs on every PR that
 touches `.github/skills/**` or `evals/**`.
 
-Add `ANTHROPIC_API_KEY` to **Settings → Secrets → Actions** in the repository.
-Without the secret the eval step is skipped with a visible warning — it never
+Add one or more API key secrets to **Settings → Secrets → Actions**:
+- `ANTHROPIC_API_KEY` (for Anthropic models)
+- `OPENAI_API_KEY` (for OpenAI models)
+- `GOOGLE_API_KEY` (for Google models)
+- `OPENROUTER_API_KEY` (for open models via OpenRouter)
+
+Without any secret configured, the eval step is skipped with a visible warning — it never
 silently passes on mock data.
 
 ---
