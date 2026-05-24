@@ -52,7 +52,7 @@ npm install -g promptfoo
 
 # Copy the example env file and fill in your values
 cp .env.example .env
-# Then edit .env — set ANTHROPIC_API_KEY and optionally EVAL_MODEL
+# Then edit .env — set ANTHROPIC_API_KEY, EVAL_PROVIDER, and EVAL_MODEL
 
 # Eval one skill
 npx promptfoo eval --config evals/agile-story-writer.yaml
