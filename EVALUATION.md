@@ -25,7 +25,7 @@ LLM-as-judge.
 
 ### How it works
 
-```
+```text
 SKILL.md  ─────────────────────────────┐
                                        ▼
 test input ──► [LLM Model*] ──────────► skill output ──► assertions ──► PASS / FAIL
@@ -70,10 +70,10 @@ npx promptfoo view
 
 | Provider | API Key | Example Models | Setup |
 |---|---|---|---|
-| **Anthropic** | `ANTHROPIC_API_KEY` | `anthropic:claude-3-7-sonnet-20250219`<br>`anthropic:claude-opus-4-5` | Get key from [console.anthropic.com](https://console.anthropic.com) |
-| **OpenAI** | `OPENAI_API_KEY` | `openai:gpt-4o`<br>`openai:gpt-4-turbo` | Get key from [platform.openai.com](https://platform.openai.com) |
-| **Google** | `GOOGLE_API_KEY` | `google:gemini-2.0-flash`<br>`google:gemini-1.5-pro` | Get key from [Google AI Studio](https://aistudio.google.com) |
-| **Open models** | `OPENROUTER_API_KEY` | `openrouter:meta-llama/llama-2-70b`<br>`openrouter:mistralai/mistral-large` | Get key from [openrouter.ai](https://openrouter.ai) (includes Llama, Mistral, Dolphin, Nous models) |
+| **Anthropic** | `ANTHROPIC_API_KEY` | `anthropic:claude-3-7-sonnet-20250219`, `anthropic:claude-opus-4-5` | Get key from [console.anthropic.com](https://console.anthropic.com) |
+| **OpenAI** | `OPENAI_API_KEY` | `openai:gpt-4o`, `openai:gpt-4-turbo` | Get key from [platform.openai.com](https://platform.openai.com) |
+| **Google** | `GOOGLE_API_KEY` | `google:gemini-2.0-flash`, `google:gemini-1.5-pro` | Get key from [Google AI Studio](https://aistudio.google.com) |
+| **Open models** | `OPENROUTER_API_KEY` | `openrouter:meta-llama/llama-2-70b`, `openrouter:mistralai/mistral-large` | Get key from [openrouter.ai](https://openrouter.ai) (includes Llama, Mistral, Dolphin, Nous models) |
 
 ### Running in CI
 
@@ -93,7 +93,7 @@ silently passes on mock data.
 
 ## Eval files
 
-```
+```text
 evals/
 ├── prompts/
 │   ├── agile-story-writer.yaml     # chat prompt: SKILL.md as system, {{input}} as user

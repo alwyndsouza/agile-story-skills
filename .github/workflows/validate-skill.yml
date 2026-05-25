@@ -62,10 +62,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Lint markdown under .github/skills/
+      - name: Lint markdown
         uses: DavidAnson/markdownlint-cli2-action@v18
         with:
-          globs: '.github/skills/**/*.md'
+          globs: '**/*.md'
 
   validate-frontmatter:
     runs-on: ubuntu-latest

@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Tag to release (e.g. v1.1.0). Creates the tag if it does not exist.'
+        description: 'Tag to release (e.g. v1.2.0). Syncs metadata, then creates the tag if it does not exist.'
         required: true
         type: string
 
@@ -38,6 +38,57 @@ jobs:
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "version=${tag#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Sync release metadata
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          VERSION: ${{ steps.resolve.outputs.version }}
+          TAG: ${{ steps.resolve.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          perl -0pi -e 's/"version":\s*"[^"]+"/"version": "$ENV{VERSION}"/' skills.json
+          perl -0pi -e 's/version-[0-9]+\.[0-9]+\.[0-9]+-blue/version-$ENV{VERSION}-blue/g' README.md
+          perl -0pi -e 's/gh release download v[0-9]+\.[0-9]+\.[0-9]+/gh release download $ENV{TAG}/g' README.md
+          perl -0pi -e 's/agile-story-skills-[0-9]+\.[0-9]+\.[0-9]+\.tar\.gz/agile-story-skills-$ENV{VERSION}.tar.gz/g' README.md
+          perl -0pi -e 's/cd agile-story-skills-[0-9]+\.[0-9]+\.[0-9]+/cd agile-story-skills-$ENV{VERSION}/g' README.md
+          perl -0pi -e 's/version: "[0-9]+\.[0-9]+\.[0-9]+"/version: "$ENV{VERSION}"/g' .github/skills/*/SKILL.md
+          perl -0pi -e 's/e\.g\. v[0-9]+\.[0-9]+\.[0-9]+/e.g. $ENV{TAG}/g' .github/workflows/release.yml
+
+          if ! grep -q "^## \[$VERSION\]" CHANGELOG.md; then
+            tmp="$(mktemp)"
+            awk -v version="$VERSION" -v date="$(date -u +%F)" '
+              !inserted && /^## \[/ {
+                print "## [" version "] - " date
+                print ""
+                print "### Changed"
+                print ""
+                print "- Release metadata synchronized for `" version "`."
+                print ""
+                inserted = 1
+              }
+              { print }
+            ' CHANGELOG.md > "$tmp"
+            mv "$tmp" CHANGELOG.md
+          fi
+
+      - name: Commit release metadata
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TAG: ${{ steps.resolve.outputs.tag }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "Release metadata already matches $TAG."
+          else
+            git add README.md skills.json CHANGELOG.md .github/skills/*/SKILL.md .github/workflows/release.yml
+            git commit -m "Sync release metadata for $TAG"
+            git push origin "HEAD:$BRANCH"
+          fi
 
       - name: Create tag on manual trigger
         if: github.event_name == 'workflow_dispatch'

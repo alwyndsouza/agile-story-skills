@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to Semantic Versioning.
 
+## [1.2.0] - 2026-05-25
+
+### Fixed
+
+- Synchronized repository, README, and skill metadata versions to `1.2.0`.
+- Aligned Markdown lint documentation and CI so all repository Markdown is checked.
+- Added CI `EVAL_MODEL` selection for promptfoo evals based on repository variables or
+  configured provider secrets.
+- Ignored local `.claude/` agent worktrees so local automation files do not pollute
+  repository checks.
+
 ## [1.1.0] - 2026-05-21
 
 ### Added

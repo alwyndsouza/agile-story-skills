@@ -11,7 +11,7 @@ description: >
 license: Proprietary — Internal use only
 metadata:
   author: engineering-team
-  version: "1.1.0"
+  version: "1.2.0"
   compatibility:
     - GitHub Copilot (Agent Mode, Cloud, CLI)
     - Claude Code / Anthropic Agent Skills

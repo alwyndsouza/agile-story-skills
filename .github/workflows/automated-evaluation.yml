@@ -38,6 +38,20 @@ jobs:
       - name: Check API key
         id: key_check
         run: |
+          if [ -n "$EVAL_MODEL_CONFIGURED" ]; then
+            eval_model="$EVAL_MODEL_CONFIGURED"
+          elif [ -n "$ANTHROPIC_API_KEY" ]; then
+            eval_model="anthropic:claude-3-7-sonnet-20250219"
+          elif [ -n "$OPENAI_API_KEY" ]; then
+            eval_model="openai:gpt-4o"
+          elif [ -n "$GOOGLE_API_KEY" ]; then
+            eval_model="google:gemini-2.0-flash"
+          elif [ -n "$OPENROUTER_API_KEY" ]; then
+            eval_model="openrouter:mistralai/mistral-large"
+          else
+            eval_model=""
+          fi
+
           if [ -z "$ANTHROPIC_API_KEY" ] && [ -z "$OPENAI_API_KEY" ] && [ -z "$GOOGLE_API_KEY" ] && [ -z "$OPENROUTER_API_KEY" ]; then
             echo "has_key=false" >> "$GITHUB_OUTPUT"
             echo "::warning::No API key secret configured — eval skipped. \
@@ -45,32 +59,37 @@ jobs:
           in Settings → Secrets → Actions to enable live CI evals."
           else
             echo "has_key=true" >> "$GITHUB_OUTPUT"
+            echo "eval_model=$eval_model" >> "$GITHUB_OUTPUT"
+            echo "Using EVAL_MODEL=$eval_model"
           fi
         env:
+          EVAL_MODEL_CONFIGURED: ${{ vars.EVAL_MODEL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
 
       - name: Run evals — specific skill
-        if: steps.key_check.outputs.has_key == 'true' && github.event.inputs.skill != ''
+        if: steps.key_check.outputs.has_key == 'true' && github.event_name == 'workflow_dispatch' && inputs.skill != ''
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          EVAL_MODEL: ${{ steps.key_check.outputs.eval_model }}
         run: |
           npx promptfoo eval \
             --config "evals/${{ github.event.inputs.skill }}.yaml" \
             --ci
 
       - name: Run evals — all skills
-        if: steps.key_check.outputs.has_key == 'true' && github.event.inputs.skill == ''
+        if: steps.key_check.outputs.has_key == 'true' && (github.event_name != 'workflow_dispatch' || inputs.skill == '')
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          EVAL_MODEL: ${{ steps.key_check.outputs.eval_model }}
         run: |
           EXIT=0
           for config in evals/agile-story-writer.yaml \

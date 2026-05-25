@@ -24,3 +24,6 @@ npm-debug.log
 
 # promptfoo local cache and results
 .promptfoo/
+
+# Local agent worktrees and settings
+.claude/
