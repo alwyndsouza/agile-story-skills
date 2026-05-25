@@ -47,9 +47,9 @@ cp -R .github/skills/sprint-goal-writer    ~/.copilot/skills/
 Recommended for shared installs so every team is on the same version.
 
 ```bash
-gh release download v1.1.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
-tar -xzf agile-story-skills-1.1.0.tar.gz
-cd agile-story-skills-1.1.0
+gh release download v1.2.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
+tar -xzf agile-story-skills-1.2.0.tar.gz
+cd agile-story-skills-1.2.0
 # then use pattern A or B above
 ```
 
@@ -73,8 +73,9 @@ done
 ## 3. Enterprise Rollout Strategy
 
 1. Maintain this repository as the central skills source of truth.
-2. Cut a `v*.*.*` release per stable version — the `release.yml` workflow creates the
-   GitHub Release with notes pulled from `CHANGELOG.md`.
+2. Cut a `v*.*.*` release per stable version using the manual `release.yml` workflow.
+   It syncs release metadata, commits any version updates, tags the synced commit, and
+   creates the GitHub Release with notes pulled from `CHANGELOG.md`.
 3. Ask product / platform teams to pin to a release tag (pattern C) rather than tracking
    `main` (pattern A), so behaviour is reproducible across teams.
 4. Standardise upgrade cadence (for example monthly) to reduce output drift.

@@ -13,6 +13,9 @@ and this project adheres to Semantic Versioning.
 - Aligned Markdown lint documentation and CI so all repository Markdown is checked.
 - Added CI `EVAL_MODEL` selection for promptfoo evals based on repository variables or
   configured provider secrets.
+- Updated release automation so manual tag creation syncs version metadata, commits the
+  updates, and tags the synced commit before publishing the GitHub Release.
+- Updated enterprise deployment documentation to reference the current pinned release.
 - Ignored local `.claude/` agent worktrees so local automation files do not pollute
   repository checks.
 

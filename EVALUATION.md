@@ -86,6 +86,9 @@ Add one or more API key secrets to **Settings → Secrets → Actions**:
 - `GOOGLE_API_KEY` (for Google models)
 - `OPENROUTER_API_KEY` (for open models via OpenRouter)
 
+Optionally set repository variable `EVAL_MODEL` to force a specific provider model. When
+it is not set, CI chooses a default model based on the first configured provider secret.
+
 Without any secret configured, the eval step is skipped with a visible warning — it never
 silently passes on mock data.
 
