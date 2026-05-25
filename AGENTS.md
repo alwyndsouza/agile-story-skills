@@ -45,16 +45,18 @@ If a task requires Python dependencies, add a `pyproject.toml` rather than a
 - **Validate structure**: `npx markdownlint-cli2 "**/*.md"` — checks all Markdown against
   `.markdownlint-cli2.jsonc`.
 - **Run evals** (requires `.env` — copy `.env.example` and fill in values):
+
   ```bash
   cp .env.example .env
   # Then edit .env and fill in:
   # - One or more API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY, or OPENROUTER_API_KEY)
   # - EVAL_MODEL with provider:model format (e.g. anthropic:claude-3-7-sonnet-20250219 or openai:gpt-4o)
-  
+
   npx promptfoo eval --config evals/agile-story-writer.yaml
   # or all four:
   for f in evals/*.yaml; do npx promptfoo eval --config "$f"; done
   ```
+
 - **MD033**: Do not use inline HTML (e.g. `<br>`) in Markdown files — it fails the linter.
 
 ## Skills Discovery

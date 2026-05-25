@@ -118,9 +118,9 @@ cd agile-story-skills
 **Option B — download a pinned release tarball (recommended for shared installs):**
 
 ```bash
-gh release download v1.1.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
-tar -xzf agile-story-skills-1.1.0.tar.gz
-cd agile-story-skills-1.1.0
+gh release download v1.2.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
+tar -xzf agile-story-skills-1.2.0.tar.gz
+cd agile-story-skills-1.2.0
 ```
 
 ### 1) Project-scoped install

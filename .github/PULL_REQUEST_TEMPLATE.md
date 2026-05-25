@@ -18,11 +18,13 @@ Select primary reason:
 Tested with Copilot Chat.
 
 **Prompt used:**
+
 ```text
 [paste prompt]
 ```
 
 **Output received:**
+
 ```text
 [paste output]
 ```
