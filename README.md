@@ -272,6 +272,13 @@ Draft an outcome-based sprint goal from a committed story list.
 3. `/agile-story-splitter` — invoked automatically when the writer flags > 8 points.
 4. `/sprint-goal-writer` — once the sprint is committed, draft the outcome-based goal.
 
+## Release and Versioning
+
+Use the manual `release.yml` workflow to cut a new version. Enter a tag like `v1.2.0`;
+the workflow syncs README install snippets, `skills.json`, skill frontmatter versions,
+and `CHANGELOG.md` before committing metadata, tagging the synced commit, and publishing
+the GitHub Release.
+
 ## What Every Story Contains
 
 | Section | Enforced Outcome |
