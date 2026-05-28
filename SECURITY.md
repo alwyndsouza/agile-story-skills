@@ -4,7 +4,8 @@
 
 | Version | Supported |
 |---|---|
-| 1.1.x | ✅ |
+| 1.2.x | ✅ |
+| 1.1.x | ❌ (superseded) |
 | 1.0.x | ❌ (superseded — paths referenced the old `jira-story-writer` skill name) |
 
 ## What these skills do NOT do
@@ -20,4 +21,5 @@ Report concerns to the repository codeowners through approved internal channels.
 Review all skill content before enabling auto-approval for shell/bash tools, consistent with GitHub's guidance for secure use of agent skills.
 
 ## Supply chain note
-This repository has zero external runtime dependencies; all skill content is static Markdown/plain text.
+The skills themselves have no runtime dependencies and make no external calls. Local and
+CI quality checks use pinned Node development dependencies in `package-lock.json`.

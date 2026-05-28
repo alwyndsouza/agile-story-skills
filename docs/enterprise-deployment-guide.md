@@ -90,7 +90,7 @@ done
 - Configure **CODEOWNERS** so all skill changes require review from designated owners.
 - Enable **branch protection** on `main`.
 - Require at least one PR review from a codeowner.
-- Require `validate-skill.yml` to pass before merge.
+- Require `quality.yml` to pass before merge.
 
 ## 5. Troubleshooting
 

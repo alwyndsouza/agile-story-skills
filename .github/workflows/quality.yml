@@ -27,6 +27,10 @@ on:
       - "scripts/**"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -54,6 +58,9 @@ jobs:
 
       - name: Lint GitHub Actions
         run: npm run lint:actions
+
+      - name: Validate skill structure
+        run: npm run validate:skills
 
       - name: Validate eval configs
         run: npm run eval:check
