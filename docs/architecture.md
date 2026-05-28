@@ -40,7 +40,7 @@ flowchart TB
   subgraph Governance["Governance and release"]
     AgentsDoc["AGENTS.md<br/>agent operating rules"]
     GovernanceDoc["docs/ai-engineering-governance.md<br/>change policy"]
-    EvalRunbook["docs/eval-runbook.md<br/>eval operations"]
+    EvaluationDoc["EVALUATION.md<br/>eval framework and operations"]
     Codeowners["CODEOWNERS<br/>review ownership"]
     Release["release.yml + CHANGELOG.md<br/>versioned GitHub Releases"]
   end
@@ -66,7 +66,7 @@ flowchart TB
 
   AgentsDoc --> Agent
   GovernanceDoc --> QualitySystem
-  EvalRunbook --> EvalConfigs
+  EvaluationDoc --> EvalConfigs
   Codeowners --> Skills
   Release --> Consumers
 ```

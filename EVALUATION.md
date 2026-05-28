@@ -69,6 +69,20 @@ npm run quality
 npm exec -- promptfoo view
 ```
 
+### Non-LLM quality checks
+
+`npm run quality` runs:
+
+- Markdown lint
+- YAML parse checks
+- GitHub Actions lint
+- Skill manifest, frontmatter, and path consistency checks
+- Eval config structure checks
+- Markdown link checks
+
+If link checks fail with status `0`, rerun with network access before treating the
+link as broken.
+
 **Supported providers and models:**
 
 | Provider | API Key | Example Models | Setup |
@@ -94,6 +108,9 @@ it is not set, CI chooses a default model based on the first configured provider
 
 Without any secret configured, the eval step is skipped with a visible warning — it never
 silently passes on mock data.
+
+Required branch protection should include `Quality`. Add `Skill Eval (promptfoo)`
+when provider secrets are configured and live eval cost is acceptable.
 
 ---
 
@@ -166,3 +183,25 @@ Run the full suite on a schedule or after any Copilot / Claude model update to
 get a drift baseline. If scores drop, compare the new output to `examples/`
 golden files to identify which rule is no longer being followed, then tighten
 the SKILL.md instruction that governs it.
+
+## Reading failures
+
+| Failure | Meaning | First response |
+|---|---|---|
+| `contains` / `not-contains` | Required structure changed | Check `SKILL.md` output template |
+| `llm-rubric` | Quality drift or ambiguous grader | Compare output to rubric and examples |
+| Provider error | API key, model name, quota, or network issue | Verify `.env` and provider status |
+| Parse error | YAML or promptfoo config invalid | Run `npm run lint:yaml` |
+
+## Updating evals
+
+Add or update evals when:
+
+- A bug escapes review
+- A `SKILL.md` behavior changes
+- Examples are rewritten
+- Trigger phrases are added
+- A model upgrade changes output shape
+
+Keep each skill at 8-12 tests. Prefer one focused assertion per behavior. Use
+deterministic assertions wherever possible.

@@ -344,11 +344,10 @@ agile-story-skills/
 ├── package-lock.json                    # Reproducible npm installs
 ├── docs/
 │   ├── ai-engineering-governance.md    # AI skill governance and quality policy
-│   ├── eval-runbook.md                 # How to run/debug/evolve evals
-│   └── enterprise-deployment-guide.md  # Enterprise installation guidance
+│   └── architecture.md                  # High-level repository architecture
 ├── .env.example                        # Multi-provider LLM configuration template
 ├── AGENTS.md                           # Guidelines for AI agents (Claude Code, Copilot, Cursor)
-├── EVALUATION.md                       # Evaluation framework: human review + automated evals
+├── EVALUATION.md                       # Evaluation framework and runbook
 ├── README.md
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
@@ -371,11 +370,6 @@ If you're an AI agent (Claude Code, GitHub Copilot, Cursor, etc.) using these sk
 - **Skill drift detection:** Automated evals catch regressions in structure, output quality, and anti-pattern refusal
 - **Architecture:** See [docs/architecture.md](docs/architecture.md)
 - **AI engineering governance:** See [docs/ai-engineering-governance.md](docs/ai-engineering-governance.md)
-- **Eval runbook:** See [docs/eval-runbook.md](docs/eval-runbook.md)
-
-## Enterprise Deployment
-
-See [docs/enterprise-deployment-guide.md](docs/enterprise-deployment-guide.md) for org-wide installation, governance, and compliance guidance.
 
 ## Contributing
 
