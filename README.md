@@ -369,6 +369,7 @@ If you're an AI agent (Claude Code, GitHub Copilot, Cursor, etc.) using these sk
 - **Human review rubric:** See `evaluation/rubric.md` in each skill directory
 - **Automated evaluation:** See [EVALUATION.md](EVALUATION.md) for the two-layer eval framework, how to run evals locally, and multi-provider LLM support
 - **Skill drift detection:** Automated evals catch regressions in structure, output quality, and anti-pattern refusal
+- **Architecture:** See [docs/architecture.md](docs/architecture.md)
 - **AI engineering governance:** See [docs/ai-engineering-governance.md](docs/ai-engineering-governance.md)
 - **Eval runbook:** See [docs/eval-runbook.md](docs/eval-runbook.md)
 
