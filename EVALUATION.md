@@ -66,7 +66,7 @@ npm run eval:all
 npm run quality
 
 # Open the HTML results report
-npx promptfoo view
+npm exec -- promptfoo view
 ```
 
 **Supported providers and models:**
@@ -112,13 +112,14 @@ evals/
 └── sprint-goal-writer.yaml         # test cases + assertions for sprint goal writer
 ```
 
-Each config file covers three test cases:
+Each config file covers at least eight test cases:
 
 | TC | Pattern | What it tests |
 |---|---|---|
 | TC1 | Happy path | Core skill output structure and quality |
 | TC2 | Edge case | Skill-specific boundary (e.g. too-few stories, pattern-pinned split) |
 | TC3 | Anti-pattern | Skill correctly refuses or redirects a bad input |
+| TC4+ | Regression coverage | Persona specificity, scope boundaries, NFR quality, context modes, split patterns, and goal health checks |
 
 ---
 

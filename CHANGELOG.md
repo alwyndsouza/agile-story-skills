@@ -7,6 +7,10 @@ and this project adheres to Semantic Versioning.
 
 ## [1.2.0] - 2026-05-25
 
+### Added
+
+- Added pinned Node quality tooling, expanded skill eval coverage, and `quality.yml`.
+
 ### Fixed
 
 - Synchronized repository, README, and skill metadata versions to `1.2.0`.

@@ -23,7 +23,7 @@ Cross-cutting:
 
 - Trigger keyword coverage in any `SKILL.md` description
 - Invoke-mode improvements
-- Bug fixes in quality rules, formatting guidance, or `validate-skill.yml`
+- Bug fixes in quality rules, formatting guidance, or `quality.yml`
 - Doc fixes in `README.md`, `CHANGELOG.md`, or `docs/`
 
 ## How to contribute
@@ -38,9 +38,18 @@ Use one of these prefixes:
 - `feat/`
 - `fix/`
 - `docs/`
+- `chore/`
+
+## PR title convention
+
+Use Conventional Commit style:
+- `feat(scope): add new capability`
+- `fix(scope): correct broken behavior`
+- `docs(scope): update documentation`
+- `chore(scope): maintain tooling or repo hygiene`
 
 ## PR requirements
-- CI must pass (`validate-skill.yml`) across every changed skill.
+- CI must pass (`quality.yml`) across every changed skill.
 - `CHANGELOG.md` must be updated.
 - Tested Copilot output must be pasted in the PR description.
 
@@ -55,4 +64,4 @@ depend on. Touching them needs explicit codeowner sign-off.
 | `agile-story-splitter` core | The eight Humanizing Work pattern set or the INVEST validation table |
 | `problem-framing` core | The three-phase / eight-question canvas structure or the refined problem-statement template |
 | `sprint-goal-writer` core | The sprint-goal sentence template or the five-item health-check checklist |
-| Shared | `SKILL.md` frontmatter fields (`name`, `description`, `license`, `metadata`); `validate-skill.yml` required-files list |
+| Shared | `SKILL.md` frontmatter fields (`name`, `description`, `license`, `metadata`); `scripts/validate-skills.mjs` required-files list |

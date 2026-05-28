@@ -11,6 +11,13 @@ on:
     paths:
       - ".github/skills/**"
       - "evals/**"
+      - "package.json"
+      - "package-lock.json"
+      - "scripts/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -79,7 +86,7 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           EVAL_MODEL: ${{ steps.key_check.outputs.eval_model }}
         run: |
-          npx promptfoo eval \
+          npm exec -- promptfoo eval \
             --config "evals/${{ github.event.inputs.skill }}.yaml" \
             --ci
 
@@ -100,6 +107,6 @@ jobs:
             echo "──────────────────────────────────────────"
             echo "Evaluating: $config"
             echo "──────────────────────────────────────────"
-            npx promptfoo eval --config "$config" --ci || EXIT=1
+            npm exec -- promptfoo eval --config "$config" --ci || EXIT=1
           done
           exit $EXIT

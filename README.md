@@ -5,7 +5,7 @@ a vague request through framing, story authoring, story splitting, and sprint go
 setting. Output is tool-agnostic — it pastes cleanly into Jira, GitHub Issues, Linear,
 and Azure DevOps.
 
-![CI](https://github.com/alwyndsouza/agile-story-skills/actions/workflows/validate-skill.yml/badge.svg)
+![Quality](https://github.com/alwyndsouza/agile-story-skills/actions/workflows/quality.yml/badge.svg)
 ![Version](https://img.shields.io/badge/version-1.2.0-blue)
 ![License](https://img.shields.io/badge/license-Proprietary-lightgrey)
 ![Copilot Plan](https://img.shields.io/badge/Copilot-Business%20%7C%20Enterprise-purple)
@@ -190,7 +190,7 @@ npm run eval:all
 npm run quality
 
 # View HTML results
-npx promptfoo view
+npm exec -- promptfoo view
 ```
 
 **Supported LLM Providers:**
@@ -213,7 +213,7 @@ curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.
 
 # Use in your session
 /caveman
-npx promptfoo eval --config evals/agile-story-writer.yaml
+npm run eval:story-writer
 /caveman-stats  # See token savings
 ```
 
@@ -324,7 +324,7 @@ agile-story-skills/
 │   │       ├── evaluation/rubric.md
 │   │       └── assets/goal-template.md
 │   ├── workflows/
-│   │   ├── validate-skill.yml         # CI: structure, markdown, frontmatter validation
+│   │   ├── quality.yml                # CI: Markdown, YAML, Actions, skill, eval, link checks
 │   │   └── automated-evaluation.yml   # CI: promptfoo evals on every PR (all providers)
 │   ├── ISSUE_TEMPLATE/                # Skill improvement issue template
 │   ├── CODEOWNERS                     # Ownership and review enforcement
@@ -335,12 +335,17 @@ agile-story-skills/
 │   │   ├── agile-story-splitter.yaml
 │   │   ├── problem-framing.yaml
 │   │   └── sprint-goal-writer.yaml
-│   ├── agile-story-writer.yaml         # Test cases + assertions (TC1/TC2/TC3)
+│   ├── agile-story-writer.yaml         # Test cases + assertions (8 tests per skill)
 │   ├── agile-story-splitter.yaml
 │   ├── problem-framing.yaml
 │   └── sprint-goal-writer.yaml
+├── scripts/                            # Local validation scripts used by npm run quality
+├── package.json                         # Pinned Node quality/eval toolchain
+├── package-lock.json                    # Reproducible npm installs
 ├── docs/
-│   └── enterprise-deployment-guide.md # Enterprise installation and governance guidance
+│   ├── ai-engineering-governance.md    # AI skill governance and quality policy
+│   ├── eval-runbook.md                 # How to run/debug/evolve evals
+│   └── enterprise-deployment-guide.md  # Enterprise installation guidance
 ├── .env.example                        # Multi-provider LLM configuration template
 ├── AGENTS.md                           # Guidelines for AI agents (Claude Code, Copilot, Cursor)
 ├── EVALUATION.md                       # Evaluation framework: human review + automated evals
@@ -364,6 +369,8 @@ If you're an AI agent (Claude Code, GitHub Copilot, Cursor, etc.) using these sk
 - **Human review rubric:** See `evaluation/rubric.md` in each skill directory
 - **Automated evaluation:** See [EVALUATION.md](EVALUATION.md) for the two-layer eval framework, how to run evals locally, and multi-provider LLM support
 - **Skill drift detection:** Automated evals catch regressions in structure, output quality, and anti-pattern refusal
+- **AI engineering governance:** See [docs/ai-engineering-governance.md](docs/ai-engineering-governance.md)
+- **Eval runbook:** See [docs/eval-runbook.md](docs/eval-runbook.md)
 
 ## Enterprise Deployment
 

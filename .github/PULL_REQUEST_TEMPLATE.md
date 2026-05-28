@@ -31,6 +31,6 @@ Tested with Copilot Chat.
 
 ## Checklist
 - [ ] `SKILL.md` frontmatter is valid (`name`, `description`, `license`, `metadata`)
-- [ ] CI passes (`validate-skill.yml`)
+- [ ] CI passes (`quality.yml`)
 - [ ] `CHANGELOG.md` updated
 - [ ] No breaking changes to existing invoke modes
