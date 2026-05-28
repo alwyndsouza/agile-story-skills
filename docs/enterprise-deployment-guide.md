@@ -47,9 +47,9 @@ cp -R .github/skills/sprint-goal-writer    ~/.copilot/skills/
 Recommended for shared installs so every team is on the same version.
 
 ```bash
-gh release download v1.2.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
-tar -xzf agile-story-skills-1.2.0.tar.gz
-cd agile-story-skills-1.2.0
+gh release download v1.1.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
+tar -xzf agile-story-skills-1.1.0.tar.gz
+cd agile-story-skills-1.1.0
 # then use pattern A or B above
 ```
 

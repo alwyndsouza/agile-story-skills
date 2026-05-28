@@ -4,8 +4,7 @@
 
 | Version | Supported |
 |---|---|
-| 1.2.x | ✅ |
-| 1.1.x | ❌ (superseded) |
+| 1.1.x | ✅ |
 | 1.0.x | ❌ (superseded — paths referenced the old `jira-story-writer` skill name) |
 
 ## What these skills do NOT do

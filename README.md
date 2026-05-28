@@ -6,7 +6,7 @@ setting. Output is tool-agnostic — it pastes cleanly into Jira, GitHub Issues,
 and Azure DevOps.
 
 ![Quality](https://github.com/alwyndsouza/agile-story-skills/actions/workflows/quality.yml/badge.svg)
-![Version](https://img.shields.io/badge/version-1.2.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![License](https://img.shields.io/badge/license-Proprietary-lightgrey)
 ![Copilot Plan](https://img.shields.io/badge/Copilot-Business%20%7C%20Enterprise-purple)
 
@@ -118,9 +118,9 @@ cd agile-story-skills
 **Option B — download a pinned release tarball (recommended for shared installs):**
 
 ```bash
-gh release download v1.2.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
-tar -xzf agile-story-skills-1.2.0.tar.gz
-cd agile-story-skills-1.2.0
+gh release download v1.1.0 --repo alwyndsouza/agile-story-skills --archive=tar.gz
+tar -xzf agile-story-skills-1.1.0.tar.gz
+cd agile-story-skills-1.1.0
 ```
 
 ### 1) Project-scoped install
@@ -280,7 +280,7 @@ Draft an outcome-based sprint goal from a committed story list.
 
 ## Release and Versioning
 
-Use the manual `release.yml` workflow to cut a new version. Enter a tag like `v1.2.0`;
+Use the manual `release.yml` workflow to cut a new version. Enter a tag like `v1.1.0`;
 the workflow syncs README install snippets, `skills.json`, skill frontmatter versions,
 and `CHANGELOG.md` before committing metadata, tagging the synced commit, and publishing
 the GitHub Release.
