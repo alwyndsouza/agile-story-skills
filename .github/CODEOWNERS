@@ -1,0 +1,13 @@
+# Agile Story Skills ownership
+#
+# Replace @alwyndsouza with your GitHub team handle (for example,
+# @your-org/platform-enablement) when migrating this repo to an organisation.
+# Codeowner approval should be required for any change to the paths below.
+
+.github/skills/                   @alwyndsouza
+.github/workflows/                @alwyndsouza
+evals/                            @alwyndsouza
+docs/                             @alwyndsouza
+README.md                         @alwyndsouza
+CHANGELOG.md                      @alwyndsouza
+skills.json                       @alwyndsouza
