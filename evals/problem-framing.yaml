@@ -64,8 +64,8 @@ tests:
           describe the problem as symptoms. It does not ask multiple questions
           at once or skip ahead to Phase 2 or 3. Answer PASS or FAIL.
 
-  # ── TC3: Context dump — pre-populates and confirms per phase ──────────────
-  - description: "TC3: Context dump — parses incident report into canvas"
+  # ── TC3: Context dump — pre-populates and asks for confirmation ───────────
+  - description: "TC3: Context dump — pre-populates phase and asks for confirmation"
     vars:
       input: |
         Here's what we know. Frame it.
@@ -77,17 +77,20 @@ tests:
         caused the finance team to report incorrect weekly figures.
     assert:
       - type: contains
-        value: "PROBLEM FRAMING CANVAS"
-      - type: contains
         value: "PHASE 1 — LOOK INWARD"
-      - type: contains
-        value: "How Might We:"
+      - type: not-contains
+        value: "PHASE 2 — LOOK OUTWARD"
+      - type: not-contains
+        value: "PHASE 3 — REFRAME"
+      - type: not-contains
+        value: "PROBLEM FRAMING CANVAS"
       - type: llm-rubric
         value: >
-          The canvas was pre-populated using details from the context dump
-          (e.g. the 2-hour Monday reconciliation, late-arriving records,
-          the finance team impact). Answer PASS or FAIL.
+          The response pre-populates Phase 1 using details from the context
+          dump (e.g. the 2-hour Monday reconciliation and late-arriving
+          records) and asks the user to confirm or correct Phase 1 before
+          moving on. Answer PASS or FAIL.
       - type: llm-rubric
         value: >
           Fields inferred from the dump are marked "(inferred)" as required
-          by the non-interactive mode rules. Answer PASS or FAIL.
+          by the context-dump mode rules. Answer PASS or FAIL.
