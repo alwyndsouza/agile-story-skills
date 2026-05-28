@@ -1,0 +1,14 @@
+{
+  "timeout": "10s",
+  "retryCount": 2,
+  "retryOn429": true,
+  "aliveStatusCodes": [200, 206, 301, 302, 303, 307, 308, 403],
+  "ignorePatterns": [
+    {
+      "pattern": "^https://github.com/alwyndsouza/agile-story-skills/actions/workflows/.*badge.svg$"
+    },
+    {
+      "pattern": "^https://img.shields.io/"
+    }
+  ]
+}

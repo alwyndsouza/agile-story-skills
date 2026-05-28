@@ -27,10 +27,11 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24.15.0"
+          cache: npm
 
-      - name: Install promptfoo
-        run: npm install -g promptfoo@latest
+      - name: Install dependencies
+        run: npm ci
 
       # Guard: skip (with a visible warning) when no API key is configured.
       # This keeps forks and first-time contributors unblocked without silently
@@ -63,7 +64,7 @@ jobs:
             echo "Using EVAL_MODEL=$eval_model"
           fi
         env:
-          EVAL_MODEL_CONFIGURED: ${{ vars.EVAL_MODEL }}
+          EVAL_MODEL_CONFIGURED: ${{ secrets.EVAL_MODEL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}

@@ -1,6 +1,7 @@
 {
   "ignores": [
-    ".claude/**"
+    ".claude/**",
+    "node_modules/**"
   ],
   "config": {
     "default": true,

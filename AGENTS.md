@@ -42,8 +42,15 @@ If a task requires Python dependencies, add a `pyproject.toml` rather than a
 
 ## Maintenance Commands
 
-- **Validate structure**: `npx markdownlint-cli2 "**/*.md"` — checks all Markdown against
+- **Validate structure**: `npm run lint:markdown` — checks all Markdown against
   `.markdownlint-cli2.jsonc`.
+- **Run all local quality checks**:
+
+  ```bash
+  npm ci
+  npm run quality
+  ```
+
 - **Run evals** (requires `.env` — copy `.env.example` and fill in values):
 
   ```bash
@@ -52,9 +59,9 @@ If a task requires Python dependencies, add a `pyproject.toml` rather than a
   # - One or more API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY, or OPENROUTER_API_KEY)
   # - EVAL_MODEL with provider:model format (e.g. anthropic:claude-3-7-sonnet-20250219 or openai:gpt-4o)
 
-  npx promptfoo eval --config evals/agile-story-writer.yaml
+  npm run eval:story-writer
   # or all four:
-  for f in evals/*.yaml; do npx promptfoo eval --config "$f"; done
+  npm run eval:all
   ```
 
 - **MD033**: Do not use inline HTML (e.g. `<br>`) in Markdown files — it fails the linter.

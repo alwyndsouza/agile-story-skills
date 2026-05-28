@@ -91,3 +91,92 @@ tests:
         value: >
           The response offers two or more candidate goal options rather than
           forcing a single goal across unrelated stories. Answer PASS or FAIL.
+
+  # ── TC4: Minimum valid set — exactly 3 stories ────────────────────────────
+  - description: "TC4: Exactly three stories — drafts goal"
+    vars:
+      input: |
+        Write a sprint goal for these stories:
+        1. Add alerting for failed ingestion jobs
+        2. Add retry metrics to the pipeline dashboard
+        3. Publish an operations runbook for ingestion failures
+    assert:
+      - type: contains
+        value: "SPRINT GOAL"
+      - type: contains
+        value: "GOAL:"
+      - type: llm-rubric
+        value: >
+          The goal unifies all three stories around ingestion reliability or
+          operations response, not a list of features. Answer PASS or FAIL.
+
+  # ── TC5: Maximum valid set — 10 stories ───────────────────────────────────
+  - description: "TC5: Ten stories — drafts focused goal"
+    vars:
+      input: |
+        Write a sprint goal for these stories:
+        1. Add schema validation to partner CSV ingestion
+        2. Add schema validation to partner JSON ingestion
+        3. Add invalid-record quarantine table
+        4. Add quality summary metric
+        5. Add alert on quality failure rate
+        6. Add DataOps runbook for quarantined records
+        7. Add replay job for corrected records
+        8. Add dashboard tile for rejected records
+        9. Add audit log for schema version changes
+        10. Add Slack notification for repeated partner failures
+    assert:
+      - type: contains
+        value: "SPRINT GOAL"
+      - type: llm-rubric
+        value: >
+          The goal covers the ten stories with one coherent outcome around
+          partner ingestion quality or recoverability. Answer PASS or FAIL.
+
+  # ── TC6: Health-check only — no full goal required ────────────────────────
+  - description: "TC6: Health-check only — feature list goal"
+    vars:
+      input: >
+        Health-check this sprint goal: Implement OAuth, mask PII, rotate
+        credentials, and add rate limiting.
+    assert:
+      - type: contains
+        value: "SPRINT GOAL HEALTH CHECK"
+      - type: llm-rubric
+        value: >
+          The response identifies that the goal is a feature list rather than
+          a single outcome-based objective. Answer PASS or FAIL.
+
+  # ── TC7: Revision — improve weak goal ─────────────────────────────────────
+  - description: "TC7: Revision — improve weak platform goal"
+    vars:
+      input: >
+        Improve this sprint goal: Continue working on the data platform.
+        Stories include migrating three ingestion jobs to Asset Bundles,
+        adding DEV deployment validation, and documenting rollback.
+    assert:
+      - type: contains
+        value: "SPRINT GOAL"
+      - type: llm-rubric
+        value: >
+          The revised goal replaces vague continuation language with a
+          one-sprint outcome tied to deployment reliability or migration safety.
+          Answer PASS or FAIL.
+
+  # ── TC8: Out-of-scope story — flag non-contributor ────────────────────────
+  - description: "TC8: Out-of-scope story — flag non-contributor"
+    vars:
+      input: |
+        Write a sprint goal for these stories:
+        1. Add OAuth 2.0 to the ingestion API
+        2. Mask PII in ingestion logs
+        3. Rotate ETL service account credentials
+        4. Add dark mode to the analytics dashboard
+        5. Add mTLS between ingestion services
+    assert:
+      - type: contains
+        value: "STORIES THAT DON'T FIT THIS GOAL"
+      - type: llm-rubric
+        value: >
+          The dark mode story is flagged as not contributing to the security
+          hardening sprint goal. Answer PASS or FAIL.
