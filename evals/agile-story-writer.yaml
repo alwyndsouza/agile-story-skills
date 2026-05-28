@@ -105,3 +105,90 @@ tests:
           The response asks for at least one of: (1) the system or component
           affected, (2) the persona who benefits, or (3) the core outcome
           expected. It does NOT generate a complete story. Answer PASS or FAIL.
+
+  # ── TC4: Explicit persona — must preserve role specificity ────────────────
+  - description: "TC4: Explicit persona — finance analyst reporting story"
+    vars:
+      input: >
+        Write a story for finance analysts to view reconciled daily revenue totals
+        before the month-end close dashboard refreshes.
+    assert:
+      - type: contains
+        value: "AGILE STORY"
+      - type: contains
+        value: "finance analyst"
+      - type: not-contains
+        value: "as a user"
+      - type: llm-rubric
+        value: >
+          The story names Finance analyst or finance analyst as the persona and
+          ties the outcome to reconciled revenue or month-end close. Answer PASS or FAIL.
+
+  # ── TC5: Spike — must use Spike type and bounded discovery ────────────────
+  - description: "TC5: Spike — lineage investigation"
+    vars:
+      input: "Create a spike to investigate row-level lineage in Databricks."
+    assert:
+      - type: contains
+        value: "AGILE STORY"
+      - type: llm-rubric
+        value: >
+          The TYPE field is set to Spike and the scope is time-boxed discovery,
+          not a full implementation commitment. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          Acceptance criteria validate learning outcomes or decision artifacts
+          such as a recommendation, benchmark, or feasibility summary. Answer PASS or FAIL.
+
+  # ── TC6: Oversized story — must flag split need ───────────────────────────
+  - description: "TC6: Oversized story — migration suggests splitter"
+    vars:
+      input: >
+        Write a story to migrate all customer, invoice, payment, and refund
+        pipelines from legacy Airflow DAGs to Databricks Asset Bundles across
+        DEV, UAT, and PROD.
+    assert:
+      - type: contains
+        value: "AGILE STORY"
+      - type: llm-rubric
+        value: >
+          The story either estimates 13 points or explicitly says the work is
+          larger than 8 points and should be split. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The response offers to invoke or recommends /agile-story-splitter for
+          vertical decomposition. Answer PASS or FAIL.
+
+  # ── TC7: Security NFRs — must be concrete ────────────────────────────────
+  - description: "TC7: Security NFRs — PII masking story"
+    vars:
+      input: "Write a story for masking PII fields in pipeline log outputs."
+    assert:
+      - type: contains
+        value: "Non-Functional Requirements"
+      - type: llm-rubric
+        value: >
+          The Security NFR specifically prevents PII from appearing in logs and
+          does not use generic placeholder wording. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          At least one acceptance criterion checks log output or audit evidence
+          for masked/redacted PII. Answer PASS or FAIL.
+
+  # ── TC8: Scope boundaries — must exclude related rollout work ─────────────
+  - description: "TC8: Scope boundaries — dashboard caching story"
+    vars:
+      input: >
+        Create a backlog item to add load-time caching for the finance KPI
+        dashboard so p95 page load stays under 2 seconds.
+    assert:
+      - type: contains
+        value: "Scope — OUT"
+      - type: llm-rubric
+        value: >
+          Scope OUT excludes at least one plausible adjacent item such as new
+          KPI definitions, dashboard redesign, or production rollout. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          Performance NFR includes p95 <= 2 seconds or an equivalent measurable
+          latency threshold. Answer PASS or FAIL.

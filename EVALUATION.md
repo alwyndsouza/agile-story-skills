@@ -49,18 +49,21 @@ objective". These use a separate grader call against the same model.
 ### Running locally
 
 ```bash
-# Install promptfoo once
-npm install -g promptfoo
+# Install pinned quality/eval tooling
+npm ci
 
 # Copy the example env file and fill in your values
 cp .env.example .env
 # Then edit .env — set EVAL_MODEL and the corresponding API key for your provider
 
 # Eval one skill
-npx promptfoo eval --config evals/agile-story-writer.yaml
+npm run eval:story-writer
 
 # Eval all four skills
-for f in evals/*.yaml; do npx promptfoo eval --config "$f"; done
+npm run eval:all
+
+# Run non-LLM quality checks
+npm run quality
 
 # Open the HTML results report
 npx promptfoo view
@@ -86,7 +89,7 @@ Add one or more API key secrets to **Settings → Secrets → Actions**:
 - `GOOGLE_API_KEY` (for Google models)
 - `OPENROUTER_API_KEY` (for open models via OpenRouter)
 
-Optionally set repository variable `EVAL_MODEL` to force a specific provider model. When
+Optionally set repository secret `EVAL_MODEL` to force a specific provider model. When
 it is not set, CI chooses a default model based on the first configured provider secret.
 
 Without any secret configured, the eval step is skipped with a visible warning — it never

@@ -1,0 +1,29 @@
+{
+  "name": "agile-story-skills",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Quality and evaluation tooling for Agile Story Skills.",
+  "engines": {
+    "node": ">=22.22.2"
+  },
+  "scripts": {
+    "lint:markdown": "markdownlint-cli2 \"**/*.md\"",
+    "lint:yaml": "node scripts/validate-yaml.mjs",
+    "lint:actions": "node scripts/validate-actions.mjs",
+    "lint:links": "find . -name '*.md' -not -path './node_modules/*' -not -path './.claude/*' -print0 | xargs -0 -n1 markdown-link-check -q -c .markdown-link-check.json",
+    "eval:check": "node scripts/validate-eval-configs.mjs",
+    "eval:story-writer": "promptfoo eval --config evals/agile-story-writer.yaml",
+    "eval:story-splitter": "promptfoo eval --config evals/agile-story-splitter.yaml",
+    "eval:problem-framing": "promptfoo eval --config evals/problem-framing.yaml",
+    "eval:sprint-goal": "promptfoo eval --config evals/sprint-goal-writer.yaml",
+    "eval:all": "for f in evals/*.yaml; do promptfoo eval --config \"$f\"; done",
+    "quality": "npm run lint:markdown && npm run lint:yaml && npm run lint:actions && npm run eval:check && npm run lint:links"
+  },
+  "devDependencies": {
+    "actionlint": "2.0.6",
+    "markdown-link-check": "3.14.2",
+    "markdownlint-cli2": "0.22.1",
+    "promptfoo": "0.121.12",
+    "yaml": "2.9.0"
+  }
+}

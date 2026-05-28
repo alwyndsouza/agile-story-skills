@@ -173,15 +173,21 @@ Every skill is validated through a **two-layer evaluation framework**:
 ### Running Evals Locally
 
 ```bash
-# Install promptfoo once
-npm install -g promptfoo
+# Install pinned quality/eval tooling
+npm ci
 
 # Set up environment
 cp .env.example .env
 # Edit .env and add your API key (see "Supported LLM Providers" below)
 
-# Run evals
-npx promptfoo eval --config evals/agile-story-writer.yaml
+# Run one eval
+npm run eval:story-writer
+
+# Run all evals
+npm run eval:all
+
+# Run non-LLM quality checks
+npm run quality
 
 # View HTML results
 npx promptfoo view

@@ -94,3 +94,75 @@ tests:
         value: >
           Fields inferred from the dump are marked "(inferred)" as required
           by the context-dump mode rules. Answer PASS or FAIL.
+
+  # ── TC4: Natural language start — asks Q1 only ────────────────────────────
+  - description: "TC4: Natural language start — asks Q1 only"
+    vars:
+      input: "We need to do problem framing."
+    assert:
+      - type: not-contains
+        value: "PROBLEM FRAMING CANVAS"
+      - type: llm-rubric
+        value: >
+          The response starts default interactive mode by asking only Q1 about
+          observable symptoms, not solutions. Answer PASS or FAIL.
+
+  # ── TC5: Non-interactive — finance reconciliation problem ─────────────────
+  - description: "TC5: Non-interactive — finance reconciliation framing"
+    vars:
+      input: >
+        Just frame this for me: Finance analysts spend two hours every Monday
+        reconciling invoice totals because late-arriving records are missed by
+        the daily ETL job.
+    assert:
+      - type: contains
+        value: "PROBLEM FRAMING CANVAS"
+      - type: contains
+        value: "Assumptions made"
+      - type: llm-rubric
+        value: >
+          The canvas names Finance analyst or finance analyst as an affected
+          persona and describes the consequence of manual reconciliation.
+          Answer PASS or FAIL.
+
+  # ── TC6: Solution-first input — must convert to symptom ───────────────────
+  - description: "TC6: Non-interactive — solution-first API request"
+    vars:
+      input: >
+        Just frame this for me: We need to add a retry service for failed
+        payment callbacks.
+    assert:
+      - type: contains
+        value: "PROBLEM FRAMING CANVAS"
+      - type: llm-rubric
+        value: >
+          The problem symptom is framed as failed payment callbacks or unreliable
+          payment confirmation, not merely "we need a retry service". Answer PASS or FAIL.
+
+  # ── TC7: HMW quality — must include measurable objective ──────────────────
+  - description: "TC7: Non-interactive — measurable HMW"
+    vars:
+      input: >
+        Just frame this for me: Operations teams learn about failed ingestion
+        jobs from downstream dashboard complaints instead of alerts.
+    assert:
+      - type: contains
+        value: "How Might We:"
+      - type: llm-rubric
+        value: >
+          The How Might We statement includes an observable objective such as
+          reducing missed failures, reducing complaint-driven detection, or
+          improving detection time. Answer PASS or FAIL.
+
+  # ── TC8: One canvas rule — avoid merging unrelated problems ───────────────
+  - description: "TC8: Non-interactive — avoid merging unrelated problems"
+    vars:
+      input: >
+        Just frame this for me: We need to reduce warehouse query costs, and
+        we also need to improve onboarding email conversion.
+    assert:
+      - type: llm-rubric
+        value: >
+          The response does not silently merge the warehouse cost and onboarding
+          email conversion problems into one broad HMW. It either chooses one
+          canvas focus or flags that separate canvases are needed. Answer PASS or FAIL.

@@ -117,3 +117,116 @@ tests:
         value: >
           The response offers a vertical slice alternative (e.g. a P1, P4,
           or P5 split) instead of the horizontal request. Answer PASS or FAIL.
+
+  # ── TC4: Pattern-pinned — must use P2 Business Rule Variations ────────────
+  - description: "TC4: Pattern-pinned — forced P2 Business Rule Variations"
+    vars:
+      input: |
+        Split this using business rule variations:
+
+        TITLE:  Calculate commission for sales orders
+        TYPE:   Story
+        POINTS: 13
+
+        As a finance analyst,
+        I want sales commission calculated for standard tiers, accelerators,
+        clawbacks, and team overrides,
+        So that monthly commission statements are ready before payroll cutoff.
+    assert:
+      - type: contains
+        value: "SPLIT SUMMARY"
+      - type: llm-rubric
+        value: >
+          The split uses Pattern P2 (Business rule variations) and each slice
+          represents an independently valuable rule scenario. Answer PASS or FAIL.
+
+  # ── TC5: Pattern-pinned — must use P3 Data Variations ─────────────────────
+  - description: "TC5: Pattern-pinned — forced P3 Data Variations"
+    vars:
+      input: |
+        Split this using data variations:
+
+        TITLE:  Ingest partner sales feeds
+        TYPE:   Story
+        POINTS: 13
+
+        As a data engineer,
+        I want CSV, JSON, XML, and EDI partner feeds ingested into the warehouse,
+        So that sales reporting covers all partner channels.
+    assert:
+      - type: contains
+        value: "SPLIT SUMMARY"
+      - type: llm-rubric
+        value: >
+          The split uses Pattern P3 (Data variations) and separates slices by
+          data format, source group, or equivalent data variant. Answer PASS or FAIL.
+
+  # ── TC6: Unknowns — must carve discovery with P8 ──────────────────────────
+  - description: "TC6: Unknowns — P8 Tiny Acts of Discovery"
+    vars:
+      input: |
+        This story is too big, split it:
+
+        TITLE:  Migrate ML feature store to vendor platform
+        TYPE:   Story
+        POINTS: 13
+
+        As an ML engineer,
+        I want online feature reads served by the vendor feature platform,
+        So that model inference stays reliable during traffic spikes.
+
+        Unknown: production p95 read latency under shadow traffic.
+    assert:
+      - type: contains
+        value: "SPLIT SUMMARY"
+      - type: llm-rubric
+        value: >
+          The response uses Pattern P8 or includes a time-boxed Spike/Tiny Act
+          of Discovery before delivery work. Answer PASS or FAIL.
+
+  # ── TC7: Task split anti-pattern — must redirect to stories ───────────────
+  - description: "TC7: Anti-pattern refusal — task split request"
+    vars:
+      input: |
+        Split this into tasks: set up database, write API, add tests.
+
+        TITLE:  Build invoice search
+        TYPE:   Story
+        POINTS: 8
+
+        As a finance analyst,
+        I want to search invoices by vendor and date,
+        So that I can resolve payment questions without asking engineering.
+    assert:
+      - type: llm-rubric
+        value: >
+          The response refuses or redirects the task-only split because tasks
+          do not deliver standalone persona value. Answer PASS or FAIL.
+      - type: llm-rubric
+        value: >
+          The response proposes vertical story slices instead of separate
+          database/API/test tasks. Answer PASS or FAIL.
+
+  # ── TC8: Summary math — total estimate must be explicit ──────────────────
+  - description: "TC8: Summary math — total estimate rationale"
+    vars:
+      input: |
+        Break this epic into sprint-sized stories:
+
+        TITLE:  Build customer 360 mart
+        TYPE:   Story
+        POINTS: 13
+
+        As a business analyst,
+        I want a curated customer 360 mart with identity, revenue, support,
+        and product usage attributes,
+        So that segmentation analysis can be run without manual joins.
+    assert:
+      - type: contains
+        value: "Original estimate:"
+      - type: contains
+        value: "New total:"
+      - type: llm-rubric
+        value: >
+          The split summary includes original estimate, new total, and a short
+          explanation for why totals differ or stay the same. Answer PASS or FAIL.

@@ -11,7 +11,7 @@ and this project adheres to Semantic Versioning.
 
 - Synchronized repository, README, and skill metadata versions to `1.2.0`.
 - Aligned Markdown lint documentation and CI so all repository Markdown is checked.
-- Added CI `EVAL_MODEL` selection for promptfoo evals based on repository variables or
+- Added CI `EVAL_MODEL` selection for promptfoo evals based on repository secrets or
   configured provider secrets.
 - Updated release automation so manual tag creation syncs version metadata, commits the
   updates, and tags the synced commit before publishing the GitHub Release.

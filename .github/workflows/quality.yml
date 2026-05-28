@@ -1,0 +1,62 @@
+name: Quality
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - ".github/workflows/**"
+      - ".markdownlint-cli2.jsonc"
+      - ".markdown-link-check.json"
+      - "package.json"
+      - "package-lock.json"
+      - "scripts/**"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - ".github/workflows/**"
+      - ".markdownlint-cli2.jsonc"
+      - ".markdown-link-check.json"
+      - "package.json"
+      - "package-lock.json"
+      - "scripts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.15.0"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint Markdown
+        run: npm run lint:markdown
+
+      - name: Parse YAML
+        run: npm run lint:yaml
+
+      - name: Lint GitHub Actions
+        run: npm run lint:actions
+
+      - name: Validate eval configs
+        run: npm run eval:check
+
+      - name: Check links
+        run: npm run lint:links
