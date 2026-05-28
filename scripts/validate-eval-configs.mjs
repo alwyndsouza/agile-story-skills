@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import YAML from "yaml";
 
 const evalFiles = [
+  "evals/agile-delivery-agent.yaml",
   "evals/agile-story-writer.yaml",
   "evals/agile-story-splitter.yaml",
   "evals/problem-framing.yaml",

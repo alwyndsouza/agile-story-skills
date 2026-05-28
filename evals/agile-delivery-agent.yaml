@@ -1,0 +1,109 @@
+description: "Agile Delivery Agent — routing and orchestration eval"
+
+providers:
+  - id: "{{env.EVAL_MODEL}}"
+    config:
+      temperature: 0
+
+prompts:
+  - file://prompts/agile-delivery-agent.yaml
+
+defaultTest:
+  options:
+    provider: "{{env.EVAL_MODEL}}"
+
+tests:
+  - description: "TC1: Story request routes to agile-story-writer"
+    vars:
+      input: "Write a story for adding failed ingestion job alerting."
+    assert:
+      - type: contains
+        value: "agile-story-writer"
+      - type: not-contains
+        value: "as a user"
+      - type: llm-rubric
+        value: >
+          The response selects agile-story-writer as the route and explains that
+          the request is for story or backlog item creation. Answer PASS or FAIL.
+
+  - description: "TC2: Split request routes to agile-story-splitter"
+    vars:
+      input: "This checkout modernization story is too big. Split it into sprint-sized vertical slices."
+    assert:
+      - type: contains
+        value: "agile-story-splitter"
+      - type: llm-rubric
+        value: >
+          The response selects agile-story-splitter and does not route primarily
+          to sprint-goal-writer or problem-framing. Answer PASS or FAIL.
+
+  - description: "TC3: Vague request routes to problem-framing"
+    vars:
+      input: "We need to fix onboarding. Help clarify what problem we should solve."
+    assert:
+      - type: contains
+        value: "problem-framing"
+      - type: llm-rubric
+        value: >
+          The response selects problem-framing because the request is vague and
+          needs discovery before backlog work. Answer PASS or FAIL.
+
+  - description: "TC4: Sprint objective routes to sprint-goal-writer"
+    vars:
+      input: "Write a sprint goal for these committed checkout and payment reliability stories."
+    assert:
+      - type: contains
+        value: "sprint-goal-writer"
+      - type: llm-rubric
+        value: >
+          The response selects sprint-goal-writer because the user asks for a
+          sprint or iteration goal. Answer PASS or FAIL.
+
+  - description: "TC5: Vague idea chains framing then story writing"
+    vars:
+      input: "Turn this vague idea into backlog-ready work: reduce invoice reconciliation pain."
+    assert:
+      - type: contains
+        value: "problem-framing"
+      - type: contains
+        value: "agile-story-writer"
+      - type: llm-rubric
+        value: >
+          The response proposes or starts a workflow where problem-framing runs
+          before agile-story-writer. Answer PASS or FAIL.
+
+  - description: "TC6: Epic-level work uses splitter"
+    vars:
+      input: "Create delivery-ready work from this epic: migrate all customer, invoice, payment, and refund pipelines to Databricks."
+    assert:
+      - type: contains
+        value: "agile-story-splitter"
+      - type: llm-rubric
+        value: >
+          The response recognizes the request as oversized or epic-level work
+          and includes agile-story-splitter in the route or workflow. Answer PASS or FAIL.
+
+  - description: "TC7: Persona rule preserved"
+    vars:
+      input: "Write a story for users to see reconciled revenue before close."
+    assert:
+      - type: contains
+        value: "agile-story-writer"
+      - type: not-contains
+        value: "as a user"
+      - type: llm-rubric
+        value: >
+          The response says role names must come from personas.md or uses a
+          specific role instead of accepting "user" as the persona. Answer PASS or FAIL.
+
+  - description: "TC8: Route explanation request"
+    vars:
+      input: "Which skill would you use to health-check this sprint goal?"
+    assert:
+      - type: contains
+        value: "sprint-goal-writer"
+      - type: llm-rubric
+        value: >
+          The response gives the selected route and reason, without attempting
+          to run unrelated skills. Answer PASS or FAIL.
+
