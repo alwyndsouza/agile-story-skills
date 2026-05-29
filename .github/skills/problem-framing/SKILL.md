@@ -145,9 +145,12 @@ before committing to backlog work based on the canvas.
 
 ---
 
-## Reference Files (loaded progressively by Copilot as needed)
+## Optional Reference Files
+
+Use these files only when needed. Do not load examples or rubrics unless output
+quality, ambiguity, or review requires them.
+
 - [framework citations](./references/SOURCES.md) — MITRE
 - [canvas template](./assets/canvas-template.md) — blank canvas in the box format above for copy-paste
-- [framing example](./examples/framing-example.md) — full worked example: vague pipeline-speed request to canvas
-- [quality rubric](./evaluation/rubric.md) — quality scoring guide
-- [standard test inputs](./evaluation/test-cases.md) — standard test inputs
+- [framing example](./examples/framing-example.md) — use only when output format is unclear
+- [quality rubric](./evaluation/rubric.md) — use only for review or self-evaluation
