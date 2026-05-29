@@ -176,11 +176,14 @@ I — Independent · N — Negotiable · V — Valuable · E — Estimable · S 
 
 ---
 
-## Reference Files (loaded progressively by Copilot as needed)
+## Optional Reference Files
+
+Use these files only when needed. Do not load examples or rubrics unless output
+quality, ambiguity, or review requires them.
+
 - [framework citations](./references/SOURCES.md) — Richard Lawrence, Peter Green
 - [split patterns](./references/split-patterns.md) — the eight patterns with before/after examples and pitfalls
-- [split example](./examples/split-example.md) — full worked example: 13-point story to 3 sprint-ready slices
+- [split example](./examples/split-example.md) — use only when output format is unclear
 - [approved personas](../agile-story-writer/references/personas.md) — approved personas shared with writer
 - [story format guide](../agile-story-writer/references/story-format-guide.md) — field-by-field authoring rules
-- [quality rubric](./evaluation/rubric.md) — quality scoring guide
-- [standard test inputs](./evaluation/test-cases.md) — standard test inputs
+- [quality rubric](./evaluation/rubric.md) — use only for review or self-evaluation

@@ -145,12 +145,15 @@ DEFINITION OF DONE ✅
 
 ---
 
-## Reference Files (loaded progressively by Copilot as needed)
+## Optional Reference Files
+
+Use these files only when needed. Do not load examples or rubrics unless output
+quality, ambiguity, or review requires them.
+
 - [framework citations](./references/SOURCES.md) — Dan North, Bill Wake
 - [story format guide](./references/story-format-guide.md) — field-by-field authoring rules
 - [approved personas](./references/personas.md) — approved team personas
-- [good story example](./examples/good-story.md) — complete reference story
-- [bad story example](./examples/bad-story.md) — annotated anti-patterns
+- [good story example](./examples/good-story.md) — use only when output format is unclear
+- [bad story example](./examples/bad-story.md) — use only when correcting anti-patterns
 - [story template](./assets/story-template.txt) — blank template for copy-paste into any agile tool
-- [quality rubric](./evaluation/rubric.md) — quality scoring guide
-- [standard test inputs](./evaluation/test-cases.md) — standard test inputs
+- [quality rubric](./evaluation/rubric.md) — use only for review or self-evaluation

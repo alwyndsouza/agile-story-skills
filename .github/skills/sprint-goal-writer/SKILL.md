@@ -138,10 +138,13 @@ explain the gap rather than tick a box that isn't true.
 
 ---
 
-## Reference Files (loaded progressively by Copilot as needed)
+## Optional Reference Files
+
+Use these files only when needed. Do not load examples or rubrics unless output
+quality, ambiguity, or review requires them.
+
 - [framework citations](./references/SOURCES.md) — Scrum Guide
 - [goal template](./assets/goal-template.md) — blank goal output in the box format above
-- [goal example](./examples/goal-example.md) — worked example: 6 stories to recommended goal plus alternatives
+- [goal example](./examples/goal-example.md) — use only when output format is unclear
 - [approved personas](../agile-story-writer/references/personas.md) — approved personas shared with writer
-- [quality rubric](./evaluation/rubric.md) — quality scoring guide
-- [standard test inputs](./evaluation/test-cases.md) — standard test inputs
+- [quality rubric](./evaluation/rubric.md) — use only for review or self-evaluation
