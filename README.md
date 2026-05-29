@@ -300,9 +300,10 @@ Draft an outcome-based sprint goal from a committed story list.
 ## Release and Versioning
 
 Use the manual `release.yml` workflow to cut a new version. Enter a tag like `v1.1.0`;
-the workflow syncs README install snippets, `skills.json`, skill frontmatter versions,
-and `CHANGELOG.md` before committing metadata, tagging the synced commit, and publishing
-the GitHub Release.
+the workflow syncs README install snippets, `skills.json`, and `CHANGELOG.md` before
+committing metadata, tagging the synced commit, and publishing the GitHub Release. Skill
+frontmatter stays minimal for GitHub Copilot compatibility; repository version metadata
+lives in `skills.json`.
 
 ## What Every Story Contains
 

@@ -8,16 +8,7 @@ description: >
   acceptance criteria, AC, GIVEN WHEN THEN, sprint card, bug ticket, spike, story points,
   definition of done, definition of ready, write a story, create a ticket, story too big,
   improve this story.
-license: Proprietary — Internal use only
-metadata:
-  author: engineering-team
-  version: "1.1.0"
-  compatibility:
-    - GitHub Copilot (Agent Mode, Cloud, CLI)
-    - Claude Code / Anthropic Agent Skills
-    - OpenAI Codex / Custom GPTs
-    - Google Gemini CLI
-    - Cursor
+argument-hint: "[feature, bug, spike, or existing ticket text]"
 ---
 
 # Agile Story Writer Skill
@@ -155,11 +146,11 @@ DEFINITION OF DONE ✅
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
-- `references/SOURCES.md` — framework citations (Dan North, Bill Wake)
-- `references/story-format-guide.md` — field-by-field authoring rules
-- `references/personas.md` — approved team personas
-- `examples/good-story.md` — complete reference story
-- `examples/bad-story.md` — annotated anti-patterns
-- `assets/story-template.txt` — blank template for copy-paste into any agile tool
-- `evaluation/rubric.md` — quality scoring guide
-- `evaluation/test-cases.md` — standard test inputs
+- [framework citations](./references/SOURCES.md) — Dan North, Bill Wake
+- [story format guide](./references/story-format-guide.md) — field-by-field authoring rules
+- [approved personas](./references/personas.md) — approved team personas
+- [good story example](./examples/good-story.md) — complete reference story
+- [bad story example](./examples/bad-story.md) — annotated anti-patterns
+- [story template](./assets/story-template.txt) — blank template for copy-paste into any agile tool
+- [quality rubric](./evaluation/rubric.md) — quality scoring guide
+- [standard test inputs](./evaluation/test-cases.md) — standard test inputs

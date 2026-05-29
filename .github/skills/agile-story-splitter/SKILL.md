@@ -7,16 +7,7 @@ description: >
   sprint. Triggers on: story too big, split this story, break this epic, story splitting,
   epic breakdown, too many points, can't estimate, Humanizing Work, vertical slice,
   oversized story, 13 points.
-license: Proprietary — Internal use only
-metadata:
-  author: engineering-team
-  version: "1.1.0"
-  compatibility:
-    - GitHub Copilot (Agent Mode, Cloud)
-    - Claude Code / Anthropic Agent Skills
-    - OpenAI Codex / Custom GPTs
-    - Google Gemini CLI
-    - Cursor
+argument-hint: "[oversized story, epic, or backlog item to split]"
 ---
 
 # Agile Story Splitter Skill
@@ -186,10 +177,10 @@ I — Independent · N — Negotiable · V — Valuable · E — Estimable · S 
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
-- `references/SOURCES.md` — framework citations (Richard Lawrence, Peter Green)
-- `references/split-patterns.md` — the eight patterns with before/after examples and pitfalls
-- `examples/split-example.md` — full worked example: 13-point story → 3 sprint-ready slices
-- `../agile-story-writer/references/personas.md` — approved personas (shared with writer)
-- `../agile-story-writer/references/story-format-guide.md` — field-by-field authoring rules
-- `evaluation/rubric.md` — quality scoring guide
-- `evaluation/test-cases.md` — standard test inputs
+- [framework citations](./references/SOURCES.md) — Richard Lawrence, Peter Green
+- [split patterns](./references/split-patterns.md) — the eight patterns with before/after examples and pitfalls
+- [split example](./examples/split-example.md) — full worked example: 13-point story to 3 sprint-ready slices
+- [approved personas](../agile-story-writer/references/personas.md) — approved personas shared with writer
+- [story format guide](../agile-story-writer/references/story-format-guide.md) — field-by-field authoring rules
+- [quality rubric](./evaluation/rubric.md) — quality scoring guide
+- [standard test inputs](./evaluation/test-cases.md) — standard test inputs

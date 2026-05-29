@@ -7,16 +7,7 @@ description: >
   on: sprint goal, write a sprint goal, what is our sprint goal, sprint objective, sprint
   planning, what are we trying to achieve this sprint, goal for the sprint, improve this
   sprint goal.
-license: Proprietary — Internal use only
-metadata:
-  author: engineering-team
-  version: "1.1.0"
-  compatibility:
-    - GitHub Copilot (Agent Mode, Cloud)
-    - Claude Code / Anthropic Agent Skills
-    - OpenAI Codex / Custom GPTs
-    - Google Gemini CLI
-    - Cursor
+argument-hint: "[committed stories or existing sprint goal]"
 ---
 
 # Sprint Goal Writer Skill
@@ -148,9 +139,9 @@ explain the gap rather than tick a box that isn't true.
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
-- `references/SOURCES.md` — framework citations (Scrum Guide)
-- `assets/goal-template.md` — blank goal output in the box format above
-- `examples/goal-example.md` — worked example: 6 stories → recommended goal + alternatives
-- `../agile-story-writer/references/personas.md` — approved personas (shared)
-- `evaluation/rubric.md` — quality scoring guide
-- `evaluation/test-cases.md` — standard test inputs
+- [framework citations](./references/SOURCES.md) — Scrum Guide
+- [goal template](./assets/goal-template.md) — blank goal output in the box format above
+- [goal example](./examples/goal-example.md) — worked example: 6 stories to recommended goal plus alternatives
+- [approved personas](../agile-story-writer/references/personas.md) — approved personas shared with writer
+- [quality rubric](./evaluation/rubric.md) — quality scoring guide
+- [standard test inputs](./evaluation/test-cases.md) — standard test inputs

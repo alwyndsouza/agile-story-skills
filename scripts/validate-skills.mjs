@@ -30,6 +30,16 @@ for (const file of requiredFiles) {
 }
 
 const ids = new Set();
+const allowedFrontmatterFields = new Set([
+  "name",
+  "description",
+  "argument-hint",
+  "user-invocable",
+  "disable-model-invocation",
+  "context",
+  "allowed-tools"
+]);
+
 for (const skill of manifest.skills ?? []) {
   if (ids.has(skill.id)) {
     failed = true;
@@ -52,11 +62,23 @@ for (const skill of manifest.skills ?? []) {
   }
 
   const frontmatter = YAML.parse(frontmatterMatch[1]);
-  for (const field of ["name", "description", "license", "metadata"]) {
+  for (const field of ["name", "description"]) {
     if (!frontmatter?.[field]) {
       failed = true;
       console.error(`${skill.path}: missing frontmatter field ${field}`);
     }
+  }
+
+  for (const field of Object.keys(frontmatter ?? {})) {
+    if (!allowedFrontmatterFields.has(field)) {
+      failed = true;
+      console.error(`${skill.path}: unsupported Copilot frontmatter field ${field}`);
+    }
+  }
+
+  if (!frontmatter?.["argument-hint"]) {
+    failed = true;
+    console.error(`${skill.path}: missing frontmatter field argument-hint`);
   }
 
   if (frontmatter?.name !== skill.id) {
@@ -64,11 +86,14 @@ for (const skill of manifest.skills ?? []) {
     console.error(`${skill.path}: frontmatter name must match skills.json id ${skill.id}`);
   }
 
-  if (frontmatter?.metadata?.version !== manifest.version) {
+  if (!/^[a-z0-9-]{1,64}$/.test(frontmatter?.name ?? "")) {
     failed = true;
-    console.error(
-      `${skill.path}: version ${frontmatter?.metadata?.version} does not match skills.json ${manifest.version}`
-    );
+    console.error(`${skill.path}: frontmatter name must be lowercase kebab-case and <= 64 chars`);
+  }
+
+  if ((frontmatter?.description ?? "").length > 1024) {
+    failed = true;
+    console.error(`${skill.path}: frontmatter description must be <= 1024 characters`);
   }
 }
 
