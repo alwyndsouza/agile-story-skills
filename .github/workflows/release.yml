@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Tag to release (e.g. v1.1.0). Syncs metadata, then creates the tag if it does not exist.'
+        description: 'Tag to release (e.g. v1.1.0). Syncs release files, then creates the tag if it does not exist.'
         required: true
         type: string
 
@@ -52,7 +52,6 @@ jobs:
           perl -0pi -e 's/gh release download v[0-9]+\.[0-9]+\.[0-9]+/gh release download $ENV{TAG}/g' README.md
           perl -0pi -e 's/agile-story-skills-[0-9]+\.[0-9]+\.[0-9]+\.tar\.gz/agile-story-skills-$ENV{VERSION}.tar.gz/g' README.md
           perl -0pi -e 's/cd agile-story-skills-[0-9]+\.[0-9]+\.[0-9]+/cd agile-story-skills-$ENV{VERSION}/g' README.md
-          perl -0pi -e 's/version: "[0-9]+\.[0-9]+\.[0-9]+"/version: "$ENV{VERSION}"/g' .github/skills/*/SKILL.md
           if ! grep -q "^## \[$VERSION\]" CHANGELOG.md; then
             tmp="$(mktemp)"
             awk -v version="$VERSION" -v date="$(date -u +%F)" '
@@ -83,7 +82,7 @@ jobs:
           if git diff --quiet; then
             echo "Release metadata already matches $TAG."
           else
-            git add README.md skills.json CHANGELOG.md .github/skills/*/SKILL.md
+            git add README.md skills.json CHANGELOG.md
             git commit -m "Sync release metadata for $TAG"
             git push origin "HEAD:$BRANCH"
           fi

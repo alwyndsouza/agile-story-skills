@@ -7,16 +7,7 @@ description: >
   problem are we solving, problem statement, how might we, HMW, reframe this requirement,
   frame the problem, is this the right problem, discovery framing, before we write
   stories, root cause framing, solution-first.
-license: Proprietary — Internal use only
-metadata:
-  author: engineering-team
-  version: "1.1.0"
-  compatibility:
-    - GitHub Copilot (Agent Mode, Cloud)
-    - Claude Code / Anthropic Agent Skills
-    - OpenAI Codex / Custom GPTs
-    - Google Gemini CLI
-    - Cursor
+argument-hint: "[vague request, problem area, or discovery context]"
 ---
 
 # Problem Framing Skill
@@ -155,8 +146,8 @@ before committing to backlog work based on the canvas.
 ---
 
 ## Reference Files (loaded progressively by Copilot as needed)
-- `references/SOURCES.md` — framework citations (MITRE)
-- `assets/canvas-template.md` — blank canvas in the box format above for copy-paste
-- `examples/framing-example.md` — full worked example: vague pipeline-speed request → canvas
-- `evaluation/rubric.md` — quality scoring guide
-- `evaluation/test-cases.md` — standard test inputs
+- [framework citations](./references/SOURCES.md) — MITRE
+- [canvas template](./assets/canvas-template.md) — blank canvas in the box format above for copy-paste
+- [framing example](./examples/framing-example.md) — full worked example: vague pipeline-speed request to canvas
+- [quality rubric](./evaluation/rubric.md) — quality scoring guide
+- [standard test inputs](./evaluation/test-cases.md) — standard test inputs
