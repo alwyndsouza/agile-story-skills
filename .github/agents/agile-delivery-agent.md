@@ -71,14 +71,18 @@ Using: <skill-name>
 <selected skill clarification questions>
 ```
 
-For a chained workflow:
+For a chained workflow with two or more skills:
 
 ```text
-Workflow: <skill-one> -> <skill-two>
+Workflow: <skill-one> -> <skill-two> [-> <skill-three> ...]
 
 Step 1 — Using: <skill-one>
-<skill-one output>
+<skill-one output or next required input>
 
 Step 2 — Using: <skill-two>
 <skill-two output or next required input>
+
+[Repeat for additional steps]
+Step N — Using: <skill-n>
+<skill-n output or next required input>
 ```
