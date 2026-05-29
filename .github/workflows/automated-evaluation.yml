@@ -4,12 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       skill:
-        description: "Skill to eval: agile-story-writer | agile-story-splitter | problem-framing | sprint-goal-writer (blank = all)"
+        description: "Eval config name: agile-delivery-agent | agile-story-writer | agile-story-splitter | problem-framing | sprint-goal-writer (blank = all)"
         required: false
         default: ""
   pull_request:
     paths:
       - ".github/skills/**"
+      - ".github/agents/**"
       - "evals/**"
       - "package.json"
       - "package-lock.json"
@@ -100,7 +101,8 @@ jobs:
           EVAL_MODEL: ${{ steps.key_check.outputs.eval_model }}
         run: |
           EXIT=0
-          for config in evals/agile-story-writer.yaml \
+          for config in evals/agile-delivery-agent.yaml \
+                        evals/agile-story-writer.yaml \
                         evals/agile-story-splitter.yaml \
                         evals/problem-framing.yaml \
                         evals/sprint-goal-writer.yaml; do

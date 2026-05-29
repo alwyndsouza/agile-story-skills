@@ -5,6 +5,7 @@
 # Codeowner approval should be required for any change to the paths below.
 
 .github/skills/                   @alwyndsouza
+.github/agents/                   @alwyndsouza
 .github/workflows/                @alwyndsouza
 evals/                            @alwyndsouza
 docs/                             @alwyndsouza
