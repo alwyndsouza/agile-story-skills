@@ -118,6 +118,10 @@ jobs:
           done
           exit $EXIT
 
+      - name: Report eval costs
+        if: always() && steps.key_check.outputs.has_key == 'true'
+        run: node scripts/report-eval-costs.mjs promptfoo-results
+
       - name: Upload eval artifacts
         if: always() && steps.key_check.outputs.has_key == 'true'
         uses: actions/upload-artifact@v4

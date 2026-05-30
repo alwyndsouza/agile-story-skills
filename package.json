@@ -19,6 +19,7 @@
     "eval:problem-framing": "promptfoo eval --config evals/problem-framing.yaml",
     "eval:sprint-goal": "promptfoo eval --config evals/sprint-goal-writer.yaml",
     "eval:all": "for f in evals/*.yaml; do promptfoo eval --config \"$f\"; done",
+    "eval:cost-report": "node scripts/report-eval-costs.mjs",
     "quality": "npm run lint:markdown && npm run lint:yaml && npm run lint:actions && npm run validate:skills && npm run eval:check && npm run lint:links"
   },
   "devDependencies": {
