@@ -10,7 +10,7 @@ prompts:
 
 defaultTest:
   vars:
-    skill_prompt: file://.github/agents/agile-delivery-agent.md
+    skill_prompt: file://../.github/agents/agile-delivery-agent.md
   options:
     provider: "{{env.EVAL_MODEL}}"
 

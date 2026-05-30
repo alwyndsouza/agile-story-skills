@@ -13,7 +13,7 @@ prompts:
 # Explicitly set it to Anthropic so we never fall back to the OpenAI default.
 defaultTest:
   vars:
-    skill_prompt: file://.github/skills/problem-framing/SKILL.md
+    skill_prompt: file://../.github/skills/problem-framing/SKILL.md
   options:
     provider: "{{env.EVAL_MODEL}}"
 
