@@ -20,7 +20,14 @@ Issues, Linear, or Azure DevOps. When this skill is active, always produce compl
 fully-populated stories using the format and quality rules below. Never produce partial or
 vague output.
 
-If the input is too vague to complete a story, ask only:
+Default to drafting when the user asks to write, create, or draft a story and the input
+contains a concrete action plus target system, capability, bug, spike topic, or outcome.
+Infer missing details from the approved personas and common agile delivery patterns, then
+state assumptions inside Context & Background. Do not ask for extra detail when a useful,
+testable story can be produced from the prompt.
+
+Only treat the input as too vague when the system or component, persona, and outcome are
+all missing or impossible to infer. In that case, ask only:
 1. The system or component affected
 2. The persona who benefits (refer to `references/personas.md`)
 3. The core outcome expected
@@ -129,6 +136,20 @@ DEFINITION OF DONE ✅
 | Bounded scope | Every story needs at least 1 OUT item |
 | Points + rationale | Fibonacci estimate with one-line complexity justification |
 | Story size | If > 8 points, suggest splitting and offer to invoke `/agile-story-splitter` |
+
+For any story estimated at 13 points, include this exact sentence in Technical Notes →
+Approach: `Recommendation: invoke /agile-story-splitter for vertical decomposition.`
+
+### Clarification Gate
+
+Use these examples to decide whether to draft or ask:
+
+| Input signal | Response |
+|---|---|
+| "Write a story for adding alerting on failed ingestion jobs" | Draft. Infer Data engineer or Operations team, ingestion jobs, failure detection outcome. |
+| "Write a story for masking PII fields in pipeline log outputs" | Draft. Infer Security NFRs and log-audit ACs. |
+| "Create a spike to investigate row-level lineage in Databricks" | Draft a Spike with bounded discovery ACs. |
+| "Fix the pipeline" | Ask the three clarification questions because system, persona, and outcome are too broad. |
 
 ---
 

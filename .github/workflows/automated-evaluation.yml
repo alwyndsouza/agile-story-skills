@@ -87,8 +87,10 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           EVAL_MODEL: ${{ steps.key_check.outputs.eval_model }}
         run: |
+          mkdir -p promptfoo-results
           npm exec -- promptfoo eval \
-            --config "evals/${{ github.event.inputs.skill }}.yaml"
+            --config "evals/${{ github.event.inputs.skill }}.yaml" \
+            --output "promptfoo-results/${{ github.event.inputs.skill }}.json"
 
       - name: Run evals — all skills
         if: steps.key_check.outputs.has_key == 'true' && (github.event_name != 'workflow_dispatch' || inputs.skill == '')
@@ -100,6 +102,7 @@ jobs:
           EVAL_MODEL: ${{ steps.key_check.outputs.eval_model }}
         run: |
           EXIT=0
+          mkdir -p promptfoo-results
           for config in evals/agile-delivery-agent.yaml \
                         evals/agile-story-writer.yaml \
                         evals/agile-story-splitter.yaml \
@@ -108,6 +111,17 @@ jobs:
             echo "──────────────────────────────────────────"
             echo "Evaluating: $config"
             echo "──────────────────────────────────────────"
-            npm exec -- promptfoo eval --config "$config" || EXIT=1
+            name="$(basename "$config" .yaml)"
+            npm exec -- promptfoo eval \
+              --config "$config" \
+              --output "promptfoo-results/${name}.json" || EXIT=1
           done
           exit $EXIT
+
+      - name: Upload eval artifacts
+        if: always() && steps.key_check.outputs.has_key == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: promptfoo-results
+          path: promptfoo-results/
+          if-no-files-found: ignore

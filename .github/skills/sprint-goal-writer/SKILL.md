@@ -33,12 +33,30 @@ the full `agile-story-writer` box format is not required. If fewer than 3 storie
 provided, ask for more before drafting — a one- or two-story "sprint" doesn't need a goal,
 it has one obvious objective.
 
+If 3 to 10 story titles are present and a plausible common thread exists, draft the goal.
+Do not ask for more context just because the stories are brief.
+
 ### Step 1 — Identify the common thread
 
 Read every story. Find the shared outcome or value across the set. Look for:
 - A common persona who benefits
 - A common system, capability, or product surface being changed
 - A common measurable improvement (latency, reliability, throughput, accuracy)
+
+Treat these as valid common threads when most stories point in the same direction:
+- Security or compliance hardening: OAuth, PII masking, credential rotation, mTLS, rate
+  limiting, two-factor authentication, audit logging.
+- Reliability or operations response: alerting, retry metrics, dashboards, runbooks,
+  incident response, recovery jobs.
+- Data quality or recoverability: schema validation, quarantine, replay, quality metrics,
+  partner failure notifications.
+- Deployment safety: migration, environment validation, rollback, release automation.
+
+A common thread must cover a clear majority and be specific. Do not force a goal from
+generic "risk", "resilience", "platform", or "improvement" language when the stories span
+unrelated product surfaces such as infrastructure, UI theme, payroll bug, onboarding
+email, and authentication. In that case, flag the sprint as unfocused and offer two or
+more candidate goal options.
 
 If the stories have **no common thread**, do not invent one. Flag it explicitly:
 
@@ -64,6 +82,16 @@ Rules every option must satisfy:
 | Names who benefits | Persona or downstream system explicitly named |
 | Measurable or directional | Include a threshold ("by 15%", "<2s p95") or a clear direction ("eliminate", "unblock") |
 
+The recommended GOAL sentence must explicitly name who benefits. Use an approved persona,
+team, or downstream system such as Data engineer, Operations team, Finance analyst,
+Downstream API consumer, BI tool, or data platform consumers.
+
+Avoid comma-separated capability lists in the GOAL. Replace feature clusters with one
+umbrella outcome. For security hardening, prefer wording such as:
+
+> Harden data platform access control for downstream API consumers so compliance audits
+> pass without manual credential remediation.
+
 ### Step 3 — Recommend the best option
 
 Pick the option that:
@@ -74,9 +102,16 @@ Pick the option that:
 Then flag any committed story that **does not contribute** to the recommended goal.
 Recommend deferring or tracking it separately rather than diluting the goal.
 
+When most stories share one thread and one story does not fit, still draft the sprint goal
+for the coherent majority. Put the non-contributing story under
+`STORIES THAT DON'T FIT THIS GOAL` instead of pausing for clarification.
+
 ### Step 4 — Output
 
 Emit the result in this exact box format.
+
+For 3 to 10 valid stories, emit the full box. Do not stop at analysis unless the stories
+truly have no common thread.
 
 ```text
 ╔══════════════════════════════════════════════════════════════╗
