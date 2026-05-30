@@ -18,8 +18,24 @@ vertically-sliced sub-stories. Apply Richard Lawrence and Peter Green's Humanizi
 split patterns. Each sub-story you produce must be fully formed in the same "AGILE STORY"
 box format used by `agile-story-writer` — no stubs, no placeholders.
 
-If the input is missing context (no system, persona, or outcome), ask up to three
-clarifying questions, then proceed.
+Default to splitting when the input contains a title or description, persona, outcome, and
+large-work signal such as 13 points, "epic", "too big", or "break down". Do not ask
+clarifying questions when those signals are present; infer reasonable details and state
+assumptions in the story context. Ask up to three clarifying questions only when the input
+does not identify a system, persona, or outcome.
+
+An `Unknown:` line counts as enough context for a P8 split. When an unknown is named, do
+not ask more questions; carve out a Spike/Tiny Act of Discovery plus one or more delivery
+slices that use the discovery result.
+
+For valid split requests, use the exact output contract below. Do not start with Markdown
+analysis headings such as `# Story Split Analysis` or `# Story Split`. Do not replace
+`SPLIT SUMMARY`, `Pattern used:`, `Original estimate:`, `New total:`, or
+`INVEST VALIDATION` with alternate wording.
+
+For valid split requests, the first visible line must be the `╔════════...` story box.
+Never use Markdown H1/H2 headings (`# Story Split`, `## Pattern Selection`) or preamble
+prose before the first sub-story.
 
 ---
 
@@ -29,6 +45,30 @@ clarifying questions, then proceed.
 
 Walk through the patterns below in order. Stop at the first one that applies. Name the
 pattern you used in the output.
+
+If the user explicitly pins a pattern, use that pattern:
+- "workflow steps" means P1.
+- "business rule variations" means P2.
+- "data variations" means P3.
+
+If the input names an unknown that blocks sizing, include P8 or a time-boxed Spike/Tiny
+Act of Discovery as the first slice before delivery slices.
+
+Never split by "foundation first, enhancements later" when the later stories cannot ship
+without the first. For P2, P3, P4, P5, and P6, each slice must include the minimum
+end-to-end work needed to deliver its own scenario and should normally have no sibling
+dependency. Use sibling dependencies only for true workflow sequencing under P1, and flag
+those dependencies in INVEST.
+
+Examples of vertical scenario slices:
+- Payment gateway migration: successful card authorization, failed-payment recovery,
+  3DS challenge completion, gateway refund, receipt generation. Each slice includes the
+  minimum checkout, API, test, and observability work needed for that scenario.
+- Commission rules: standard tier commission, accelerator commission, clawback handling,
+  team override handling. Each rule slice includes enough calculation and reporting work
+  to validate that scenario without depending on a sibling story.
+- Partner feeds: CSV ingestion, JSON ingestion, EDI ingestion. Each feed slice includes
+  parse, validate, load, and monitoring for that feed shape.
 
 | # | Pattern | When it applies |
 |---|---------|-----------------|
@@ -111,6 +151,10 @@ Each sub-story must:
 - Include at least 1 explicit Scope OUT item
 - Carry a Fibonacci estimate ≤ 8 points with rationale
 - Name the dependencies it has on sibling slices
+- Avoid identical "So that" clauses; each slice needs its own standalone value driver
+- Prefer `Blocked by | None` and `Blocks | None` for independently shippable scenario
+  slices. Do not create artificial chains where #2 depends on #1 just because #1 is a
+  simpler scenario.
 
 ### Step 3 — Summary table and total estimate
 
@@ -134,6 +178,9 @@ Why the totals differ: [one line — e.g. discovery overhead, integration tests 
 or split reveals smaller scope]
 ```
 
+This section is mandatory for every valid split, even when the split pattern is explained
+earlier in prose. Keep labels and capitalization exact.
+
 ### Step 4 — INVEST validation
 
 Validate every sub-story against INVEST. Flag any sub-story that fails a letter and explain
@@ -149,6 +196,9 @@ INVEST VALIDATION
 | 2 | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ | Depends on #1 — sequenced not  |
 |   |   |   |   |   |   |   | independent                    |
 ```
+
+This section is mandatory for every valid split. For sequenced workflow slices, mark the
+Independent column with `⚠️` where a slice depends on a sibling story.
 
 I — Independent · N — Negotiable · V — Valuable · E — Estimable · S — Small · T — Testable
 

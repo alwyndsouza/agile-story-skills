@@ -16,4 +16,5 @@
 **Input:** List of 5 unrelated stories
 **Expected Characteristics:**
 - Skill flags lack of common thread
-- Offers two candidate goals (Goal A vs Goal B)
+- Uses the `SPRINT GOAL OPTIONS` format
+- Offers two or more viable candidate goals rather than recommending one forced goal

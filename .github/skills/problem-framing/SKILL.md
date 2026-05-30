@@ -111,12 +111,34 @@ If the user pastes a dump of context instead of asking for an interview, do not 
 Parse the dump and pre-populate the canvas, then **ask for confirmation per phase** before
 outputting. Flag any field you had to infer with `(inferred)`.
 
+In context-dump mode, show only Phase 1 first unless the user explicitly asks for a full
+canvas. Use the exact phase heading `PHASE 1 — LOOK INWARD`. Mark every inferred field
+with lowercase `(inferred)`.
+
 ## Behaviour — Non-Interactive Mode
 
 If the user says something like *"just frame this for me: [description]"*, infer every
 answer from the description, fill the canvas, and **list every assumption you made under
 a "Assumptions made" footer**. Recommend that the user walks the team through Q1–Q8
 before committing to backlog work based on the canvas.
+
+In non-interactive mode, never ask follow-up questions. Convert solution-first wording into
+observable symptoms:
+- "We need a dashboard to monitor pipeline latency" becomes a visibility symptom such as
+  "pipeline latency is not visible early enough for Data engineers or Operations teams to
+  act before downstream impact."
+- "We need to add a retry service for failed payment callbacks" becomes a reliability
+  symptom such as "payment callbacks fail or remain unconfirmed without dependable
+  recovery."
+
+Use this exact problem statement shape:
+
+> The problem is: [who] struggles to [accomplish what] because [root cause], which leads
+> to [consequence].
+
+If one prompt contains unrelated problems, do not merge them into one broad canvas. Choose
+one focus and name the other as requiring a separate canvas, or state that separate
+canvases are needed.
 
 ---
 

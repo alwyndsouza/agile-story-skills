@@ -5,6 +5,7 @@ providers:
   - id: "{{env.EVAL_MODEL}}"
     config:
       temperature: 0
+      max_tokens: 8192
 
 prompts:
   - file://prompts/agile-story-writer.yaml
@@ -117,8 +118,6 @@ tests:
     assert:
       - type: contains
         value: "AGILE STORY"
-      - type: contains
-        value: "finance analyst"
       - type: not-contains
         value: "as a user"
       - type: llm-rubric

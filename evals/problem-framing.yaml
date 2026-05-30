@@ -5,6 +5,7 @@ providers:
   - id: "{{env.EVAL_MODEL}}"
     config:
       temperature: 0
+      max_tokens: 8192
 
 prompts:
   - file://prompts/problem-framing.yaml
@@ -34,7 +35,7 @@ tests:
       - type: contains
         value: "How Might We:"
       - type: contains
-        value: "Assumptions made"
+        value: "ASSUMPTIONS MADE"
       - type: llm-rubric
         value: >
           Q1 (Problem symptoms) describes an observable symptom such as
@@ -120,7 +121,7 @@ tests:
       - type: contains
         value: "PROBLEM FRAMING CANVAS"
       - type: contains
-        value: "Assumptions made"
+        value: "ASSUMPTIONS MADE"
       - type: llm-rubric
         value: >
           The canvas names Finance analyst or finance analyst as an affected

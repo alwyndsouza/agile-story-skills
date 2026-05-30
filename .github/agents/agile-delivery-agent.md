@@ -45,6 +45,33 @@ When multiple intents appear, choose the smallest useful workflow:
 | Sprint planning with story list | `sprint-goal-writer` |
 | Sprint planning with vague work | `problem-framing` then `agile-story-writer` then `sprint-goal-writer` |
 
+When a user asks for delivery-ready work from an epic, large migration, or broad set of
+pipelines/capabilities, include `agile-story-splitter` in the workflow even if discovery
+questions are needed first:
+
+```text
+Workflow: problem-framing -> agile-story-splitter
+
+Step 1 — Using: problem-framing
+<problem-framing output or next required input>
+
+Step 2 — Using: agile-story-splitter
+Next after framing is complete.
+```
+
+When a user asks to turn a vague idea into backlog-ready work, always label the workflow
+before asking discovery questions:
+
+```text
+Workflow: problem-framing -> agile-story-writer
+
+Step 1 — Using: problem-framing
+<problem-framing output or next required input>
+
+Step 2 — Using: agile-story-writer
+Next after framing is complete.
+```
+
 ## Operating Rules
 
 1. Load the selected skill before producing final output.

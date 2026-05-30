@@ -4,6 +4,7 @@ providers:
   - id: "{{env.EVAL_MODEL}}"
     config:
       temperature: 0
+      max_tokens: 8192
 
 prompts:
   - file://prompts/agile-delivery-agent.yaml

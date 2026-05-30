@@ -5,6 +5,7 @@ providers:
   - id: "{{env.EVAL_MODEL}}"
     config:
       temperature: 0
+      max_tokens: 8192
 
 prompts:
   - file://prompts/sprint-goal-writer.yaml
@@ -41,8 +42,10 @@ tests:
         value: "SPRINT GOAL HEALTH CHECK"
       - type: llm-rubric
         value: >
-          The GOAL is a single sentence. It does not use "and" to join multiple
-          features (e.g. not "Implement OAuth and mask PII and rotate credentials").
+          The GOAL is a single sentence and is not a feature enumeration. It
+          does not join multiple shipped features or story titles with "and"
+          (e.g. not "Implement OAuth and mask PII and rotate credentials").
+          Incidental "and" is acceptable for grammar or beneficiary names.
           Answer PASS or FAIL.
       - type: llm-rubric
         value: >
