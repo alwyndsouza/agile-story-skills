@@ -30,3 +30,21 @@ SPRINT GOAL HEALTH CHECK
 - [ ] Achievable within one sprint
 - [ ] Team can use it to make daily trade-off decisions
 ```
+
+For unfocused sprints with no common thread, use this format instead:
+
+```text
+╔══════════════════════════════════════════════════════════════╗
+║  SPRINT GOAL OPTIONS                                         ║
+╚══════════════════════════════════════════════════════════════╝
+
+ASSESSMENT: These stories don't share an obvious outcome. The sprint is unfocused, or
+            two or more candidate goals are competing.
+
+CANDIDATE GOALS:
+1. [Candidate goal sentence] — would include [story titles] and defer [story titles]
+2. [Candidate goal sentence] — would include [story titles] and defer [story titles]
+
+RECOMMENDATION: Choose one candidate goal before sprint commitment, then defer or track
+                separately any story that does not support that goal.
+```

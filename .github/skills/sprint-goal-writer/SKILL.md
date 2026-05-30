@@ -55,14 +55,19 @@ Treat these as valid common threads when most stories point in the same directio
 A common thread must cover a clear majority and be specific. Do not force a goal from
 generic "risk", "resilience", "platform", or "improvement" language when the stories span
 unrelated product surfaces such as infrastructure, UI theme, payroll bug, onboarding
-email, and authentication. In that case, flag the sprint as unfocused and offer two or
-more candidate goal options.
+email, and authentication. Do not combine unrelated domains such as a Kubernetes
+migration, payroll bug, onboarding email, dashboard theme, and authentication change under
+a broad "security and reliability" umbrella. In that case, flag the sprint as unfocused
+and offer two or more candidate goal options.
 
 If the stories have **no common thread**, do not invent one. Flag it explicitly:
 
 > "These stories don't share an obvious outcome. Either the sprint is unfocused, or two
 > candidate goals are competing. Two candidates I see: [Goal A], [Goal B]. Which
 > direction does the team want to pull?"
+
+When this happens, do not pick one candidate as the recommended sprint goal. Offer viable
+candidate directions and ask the team to choose or descope.
 
 ### Step 2 — Draft 2–3 goal options
 
@@ -106,9 +111,33 @@ When most stories share one thread and one story does not fit, still draft the s
 for the coherent majority. Put the non-contributing story under
 `STORIES THAT DON'T FIT THIS GOAL` instead of pausing for clarification.
 
+When no thread covers a coherent majority, skip the recommended-goal format and use the
+unfocused-sprint format below. Do not hide viable candidates under `ALTERNATIVES
+CONSIDERED`; candidates are first-class options in that mode.
+
 ### Step 4 — Output
 
-Emit the result in this exact box format.
+If the sprint is unfocused or has no common thread, emit this exact box format:
+
+```text
+╔══════════════════════════════════════════════════════════════╗
+║  SPRINT GOAL OPTIONS                                         ║
+╚══════════════════════════════════════════════════════════════╝
+
+ASSESSMENT: These stories don't share an obvious outcome. The sprint is unfocused, or
+            two or more candidate goals are competing.
+
+CANDIDATE GOALS:
+1. [Candidate goal sentence] — would include [story titles] and defer [story titles]
+2. [Candidate goal sentence] — would include [story titles] and defer [story titles]
+
+RECOMMENDATION: Choose one candidate goal before sprint commitment, then defer or track
+                separately any story that does not support that goal.
+```
+
+Do not emit a single `GOAL:` field in this mode.
+
+When the stories have a coherent common thread, emit the result in this exact box format.
 
 For 3 to 10 valid stories, emit the full box. Do not stop at analysis unless the stories
 truly have no common thread.

@@ -4,7 +4,8 @@ import path from "node:path";
 const resultsDir = process.argv[2] ?? "promptfoo-results";
 
 function asNumber(value) {
-  return Number.isFinite(value) ? value : 0;
+  const number = typeof value === "string" ? Number(value) : value;
+  return Number.isFinite(number) ? number : 0;
 }
 
 function formatMoney(value) {
@@ -15,9 +16,11 @@ function statusFor(result) {
   if (result.success) {
     return "PASS";
   }
-  if (result.error) {
+
+  if (result.response?.error) {
     return "ERROR";
   }
+
   return "FAIL";
 }
 
