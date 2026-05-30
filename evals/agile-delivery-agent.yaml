@@ -9,6 +9,8 @@ prompts:
   - file://prompts/agile-delivery-agent.yaml
 
 defaultTest:
+  vars:
+    skill_prompt: file://.github/agents/agile-delivery-agent.md
   options:
     provider: "{{env.EVAL_MODEL}}"
 
@@ -106,4 +108,3 @@ tests:
         value: >
           The response gives the selected route and reason, without attempting
           to run unrelated skills. Answer PASS or FAIL.
-

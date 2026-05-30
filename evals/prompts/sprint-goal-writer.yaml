@@ -1,4 +1,4 @@
 - role: system
-  content: "file://.github/skills/sprint-goal-writer/SKILL.md"
+  content: "{{skill_prompt}}"
 - role: user
   content: "{{input}}"

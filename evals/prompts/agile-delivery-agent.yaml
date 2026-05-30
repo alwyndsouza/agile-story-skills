@@ -1,5 +1,4 @@
 - role: system
-  content: "file://.github/agents/agile-delivery-agent.md"
+  content: "{{skill_prompt}}"
 - role: user
   content: "{{input}}"
-
