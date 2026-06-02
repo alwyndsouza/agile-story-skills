@@ -60,7 +60,7 @@ If a task requires Python dependencies, add a `pyproject.toml` rather than a
   # - EVAL_MODEL with provider:model format (e.g. anthropic:claude-3-7-sonnet-20250219 or openai:gpt-4o)
 
   npm run eval:story-writer
-  # or all four:
+  # or all evals:
   npm run eval:all
   ```
 

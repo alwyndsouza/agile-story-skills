@@ -7,6 +7,13 @@ and this project adheres to Semantic Versioning.
 
 ## [1.1.0] - 2026-05-28
 
+## [Unreleased]
+
+### Changed
+
+- Aligned evaluation and contributor docs with the current `EVAL_MODEL` default,
+  eval scope, and supported `SKILL.md` frontmatter fields.
+
 ### Added
 
 - `agile-story-writer` skill — generates complete, tool-agnostic agile stories (Jira,
