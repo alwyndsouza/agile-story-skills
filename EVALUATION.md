@@ -1,7 +1,8 @@
 # Evaluation Framework for Agile Story Skills
 
 This document describes how to evaluate the quality and consistency of the four
-skills in this repository and how to detect skill drift over time.
+skills in this repository, plus the delivery agent that routes across them, and
+how to detect drift over time.
 
 ---
 
@@ -59,7 +60,7 @@ cp .env.example .env
 # Eval one skill
 npm run eval:story-writer
 
-# Eval all four skills
+# Eval all skill and agent evals
 npm run eval:all
 
 # Run non-LLM quality checks

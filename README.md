@@ -216,7 +216,7 @@ npm exec -- promptfoo view
 
 | Provider | API Key | Example |
 |----------|---------|---------|
-| **Anthropic** (default) | `ANTHROPIC_API_KEY` | `EVAL_MODEL=anthropic:claude-3-5-sonnet-20241022` |
+| **Anthropic** (default) | `ANTHROPIC_API_KEY` | `EVAL_MODEL=anthropic:claude-3-7-sonnet-20250219` |
 | **OpenAI** | `OPENAI_API_KEY` | `EVAL_MODEL=openai:gpt-4o` |
 | **Google** | `GOOGLE_API_KEY` | `EVAL_MODEL=google:gemini-2.0-flash` |
 | **Open models** | `OPENROUTER_API_KEY` | `EVAL_MODEL=openrouter:meta-llama/llama-2-70b` |

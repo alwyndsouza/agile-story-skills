@@ -11,7 +11,7 @@ prompts:
   - file://prompts/agile-story-splitter.yaml
 
 # llm-rubric assertions use a separate grader call.
-# Explicitly set it to Anthropic so we never fall back to the OpenAI default.
+# Keep the grader aligned to the configured EVAL_MODEL to avoid provider drift.
 defaultTest:
   vars:
     skill_prompt: file://../.github/skills/agile-story-splitter/SKILL.md

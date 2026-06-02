@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to Semantic Versioning.
 
+## [Unreleased]
+
+### Changed
+
+- Aligned evaluation and contributor docs with the current `EVAL_MODEL` default,
+  eval scope, and supported `SKILL.md` frontmatter fields.
+
 ## [1.1.0] - 2026-05-28
 
 ### Added
