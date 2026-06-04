@@ -9,6 +9,8 @@ description: >
   definition of done, definition of ready, write a story, create a ticket, story too big,
   improve this story.
 argument-hint: "[feature, bug, spike, or existing ticket text]"
+applyTo:
+  - pattern: "write.*story|create.*story|draft.*story|backlog item|ticket|acceptance criteria|bug ticket|spike"
 ---
 
 # Agile Story Writer Skill

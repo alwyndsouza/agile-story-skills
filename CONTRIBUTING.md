@@ -21,7 +21,7 @@ Per skill:
 
 Cross-cutting:
 
-- Trigger keyword coverage in any `SKILL.md` description
+- Trigger keyword coverage in any `SKILL.md` description or `applyTo` pattern
 - Invoke-mode improvements
 - Bug fixes in quality rules, formatting guidance, or `quality.yml`
 - Doc fixes in `README.md`, `CHANGELOG.md`, or `docs/`
@@ -64,4 +64,4 @@ depend on. Touching them needs explicit codeowner sign-off.
 | `agile-story-splitter` core | The eight Humanizing Work pattern set or the INVEST validation table |
 | `problem-framing` core | The three-phase / eight-question canvas structure or the refined problem-statement template |
 | `sprint-goal-writer` core | The sprint-goal sentence template or the five-item health-check checklist |
-| Shared | `SKILL.md` frontmatter fields (`name`, `description`, `argument-hint`, `user-invocable`, `disable-model-invocation`, `context`, `allowed-tools`); `scripts/validate-skills.mjs` required-files list |
+| Shared | `SKILL.md` frontmatter fields (`name`, `description`, `argument-hint`, `applyTo`, `user-invocable`, `disable-model-invocation`, `context`, `allowed-tools`); `scripts/validate-skills.mjs` required-files list |

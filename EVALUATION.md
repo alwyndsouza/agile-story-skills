@@ -1,8 +1,7 @@
 # Evaluation Framework for Agile Story Skills
 
 This document describes how to evaluate the quality and consistency of the four
-skills in this repository, plus the delivery agent that routes across them, and
-how to detect drift over time.
+skills in this repository and how to detect drift over time.
 
 ---
 
@@ -60,7 +59,7 @@ cp .env.example .env
 # Eval one skill
 npm run eval:story-writer
 
-# Eval all skill and agent evals
+# Eval all skill evals
 npm run eval:all
 
 # Run non-LLM quality checks
@@ -120,12 +119,10 @@ when provider secrets are configured and live eval cost is acceptable.
 ```text
 evals/
 ├── prompts/
-│   ├── agile-delivery-agent.yaml   # chat prompt: agent wrapper as system, {{input}} as user
 │   ├── agile-story-writer.yaml     # chat prompt: SKILL.md as system, {{input}} as user
 │   ├── agile-story-splitter.yaml
 │   ├── problem-framing.yaml
 │   └── sprint-goal-writer.yaml
-├── agile-delivery-agent.yaml       # routing and orchestration test cases
 ├── agile-story-writer.yaml         # test cases + assertions for story writer
 ├── agile-story-splitter.yaml       # test cases + assertions for story splitter
 ├── problem-framing.yaml            # test cases + assertions for problem framing
@@ -141,7 +138,8 @@ Each skill config file covers at least eight test cases:
 | TC3 | Anti-pattern | Skill correctly refuses or redirects a bad input |
 | TC4+ | Regression coverage | Persona specificity, scope boundaries, NFR quality, context modes, split patterns, and goal health checks |
 
-`agile-delivery-agent.yaml` covers routing and orchestration across the four skills.
+Trigger routing is covered by each skill's `description` and `applyTo` frontmatter,
+validated through `scripts/validate-skills.mjs`.
 
 ---
 

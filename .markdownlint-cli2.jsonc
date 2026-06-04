@@ -1,6 +1,7 @@
 {
   "ignores": [
     ".claude/**",
+    ".agents/**",
     "node_modules/**"
   ],
   "config": {

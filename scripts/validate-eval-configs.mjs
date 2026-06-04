@@ -1,13 +1,8 @@
 import { readFileSync } from "node:fs";
 import YAML from "yaml";
 
-const evalFiles = [
-  "evals/agile-delivery-agent.yaml",
-  "evals/agile-story-writer.yaml",
-  "evals/agile-story-splitter.yaml",
-  "evals/problem-framing.yaml",
-  "evals/sprint-goal-writer.yaml"
-];
+const manifest = JSON.parse(readFileSync("skills.json", "utf8"));
+const evalFiles = (manifest.skills ?? []).map((skill) => `evals/${skill.id}.yaml`);
 
 let failed = false;
 
