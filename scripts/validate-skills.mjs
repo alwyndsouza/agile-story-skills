@@ -34,6 +34,7 @@ const allowedFrontmatterFields = new Set([
   "name",
   "description",
   "argument-hint",
+  "applyTo",
   "user-invocable",
   "disable-model-invocation",
   "context",

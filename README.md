@@ -30,24 +30,21 @@ and Azure DevOps.
 | 3 | [`problem-framing`](.github/skills/problem-framing) | A request is vague, teams disagree on the real problem, or discovery is needed before backlog grooming. |
 | 4 | [`sprint-goal-writer`](.github/skills/sprint-goal-writer) | Sprint planning needs a single outcome-based objective drawn from 3–10 committed stories. |
 
-## Custom Agent Wrapper
+## Skill Triggering
 
-[`agile-delivery-agent`](.github/agents/agile-delivery-agent.md) is a repo-local
-orchestration agent that routes user requests to the right skill and chains skills for
-multi-step workflows.
+Each skill owns its own natural-language trigger coverage through `description` and
+`applyTo` frontmatter. Copy the skill directories into a project or personal skills
+folder, then ask for the agile outcome directly.
 
-Use it when you want one front door instead of asking users to choose one of the four
-skills directly.
-
-| User asks for | Agent route |
+| User asks for | Skill |
 |---|---|
 | Story, bug, spike, backlog item, acceptance criteria | `agile-story-writer` |
 | Split, decompose, break down, epic-to-stories | `agile-story-splitter` |
 | Clarify, frame problem, discovery, HMW | `problem-framing` |
 | Sprint goal, iteration objective, goal health check | `sprint-goal-writer` |
 
-For vague backlog work, the agent runs `problem-framing` before `agile-story-writer`.
-For oversized work, it includes `agile-story-splitter`.
+For vague backlog work, run `problem-framing` before `agile-story-writer`. For oversized
+work, run `agile-story-splitter` after the story writer flags a > 8 point estimate.
 
 ## Frameworks and Standards
 
@@ -346,19 +343,15 @@ agile-story-skills/
 │   ├── workflows/
 │   │   ├── quality.yml                # CI: Markdown, YAML, Actions, skill, eval, link checks
 │   │   └── automated-evaluation.yml   # CI: promptfoo evals on every PR (all providers)
-│   ├── agents/
-│   │   └── agile-delivery-agent.md    # Custom wrapper agent for routing/chaining four skills
 │   ├── ISSUE_TEMPLATE/                # Skill improvement issue template
 │   ├── CODEOWNERS                     # Ownership and review enforcement
 │   └── PULL_REQUEST_TEMPLATE.md       # PR quality checklist
 ├── evals/                              # Promptfoo evaluation configs
 │   ├── prompts/
-│   │   ├── agile-delivery-agent.yaml  # Chat prompt: agent wrapper + {{input}}
 │   │   ├── agile-story-writer.yaml    # Chat prompt: SKILL.md + {{input}}
 │   │   ├── agile-story-splitter.yaml
 │   │   ├── problem-framing.yaml
 │   │   └── sprint-goal-writer.yaml
-│   ├── agile-delivery-agent.yaml       # Routing + orchestration assertions
 │   ├── agile-story-writer.yaml         # Test cases + assertions (8 tests per skill)
 │   ├── agile-story-splitter.yaml
 │   ├── problem-framing.yaml
@@ -406,5 +399,4 @@ See [CHANGELOG.md](CHANGELOG.md).
 ## Roadmap
 
 - Org-level skills support (coming)
-- CLI or MCP runtime for the custom agent wrapper (planned)
 - Jira / Linear / GitHub Issues push via MCP (future)

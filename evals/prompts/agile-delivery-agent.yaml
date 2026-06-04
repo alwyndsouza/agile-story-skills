@@ -1,4 +1,0 @@
-- role: system
-  content: "{{skill_prompt}}"
-- role: user
-  content: "{{input}}"

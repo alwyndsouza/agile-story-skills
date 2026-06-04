@@ -27,3 +27,5 @@ npm-debug.log
 
 # Local agent worktrees and settings
 .claude/
+.agents/
+skills-lock.json
