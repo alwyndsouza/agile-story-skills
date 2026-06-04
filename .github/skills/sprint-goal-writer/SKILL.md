@@ -8,6 +8,8 @@ description: >
   planning, what are we trying to achieve this sprint, goal for the sprint, improve this
   sprint goal.
 argument-hint: "[committed stories or existing sprint goal]"
+applyTo:
+  - pattern: "sprint goal|sprint objective|write a sprint goal|iteration goal|goal for the sprint"
 ---
 
 # Sprint Goal Writer Skill

@@ -8,6 +8,8 @@ description: >
   frame the problem, is this the right problem, discovery framing, before we write
   stories, root cause framing, solution-first.
 argument-hint: "[vague request, problem area, or discovery context]"
+applyTo:
+  - pattern: "problem framing|frame the problem|problem statement|how might we|HMW|discovery|reframe"
 ---
 
 # Problem Framing Skill

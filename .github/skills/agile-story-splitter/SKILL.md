@@ -8,6 +8,8 @@ description: >
   epic breakdown, too many points, can't estimate, Humanizing Work, vertical slice,
   oversized story, 13 points.
 argument-hint: "[oversized story, epic, or backlog item to split]"
+applyTo:
+  - pattern: "split.*story|break.*epic|decompose|story too big|oversized story|13 points|too many points|can't estimate"
 ---
 
 # Agile Story Splitter Skill
